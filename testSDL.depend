@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1739737736 source:c:\users\admin\documents\code\testsdl\main.cpp
+	<iostream>
+	<cmath>
+	<iomanip>
+	<SDL.h>
+
+1742055450 source:c:\users\admin\documents\project game\testsdl\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	<string.h>
+	<vector>
+	"definition.h"
+	"textureManager.h"
+	"characterMovement.h"
+	"flowerGrowth.h"
+	"updateScore.h"
+
+1741320427 source:c:\users\admin\documents\project game\testsdl\playermovement.cpp
+	<SDL.h>
+	"definition.h"
+
+1742055295 c:\users\admin\documents\project game\testsdl\definition.h
+	<string>
+	<SDL.h>
+	<vector>
+
+1742054677 source:c:\users\admin\documents\project game\testsdl\charactermovement.cpp
+	<SDL.h>
+	<vector>
+	"definition.h"
+
+1742031055 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	"definition.h"
+
+1742028490 c:\users\admin\documents\project game\testsdl\texturemanager.h
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1741366827 c:\users\admin\documents\project game\testsdl\drawdetails.h
+	<SDL.h>
+	<SDL_image.h>
+	"textureManager.h"
+	"definition.h"
+
+1742050531 c:\users\admin\documents\project game\testsdl\charactermovement.h
+	<SDL.h>
+	<vector>
+
+1742055449 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+	<SDL.h>
+	"definition.h"
+
+1741366827 source:c:\users\admin\documents\project game\testsdl\drawdetails.cpp
+	<SDL.h>
+	<SDL_image.h>
+	"textureManager.h"
+	"definition.h"
+
+1741570089 source:c:\users\admin\documents\project game\testsdl\grid.cpp
+
+1742028418 source:c:\users\admin\documents\project game\testsdl\flowergrowth.cpp
+	<SDL.h>
+	"definition.h"
+
+1742028382 c:\users\admin\documents\project game\testsdl\flowergrowth.h
+	<SDL.h>
+
+1742054677 source:c:\users\admin\documents\project game\testsdl\updatescore.cpp
+	<SDL.h>
+	<SDL_ttf.h>
+	<string>
+	"definition.h"
+
+1742054700 c:\users\admin\documents\project game\testsdl\updatescore.h
+

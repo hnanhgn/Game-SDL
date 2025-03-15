@@ -11,7 +11,3 @@ void drawBackground(SDL_Renderer* renderer, SDL_Texture* background);
 void drawPlants(SDL_Renderer* renderer, SDL_Texture* seed, SDL_Texture* sprout, SDL_Texture* bud, SDL_Texture* flower);
 
 #endif // TEXTUREMANAGER_H_INCLUDED
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

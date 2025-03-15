@@ -36,7 +36,3 @@ extern Uint32 currentTime ;
 extern vector<Plant> plants;
 
 #endif // DEFINITION_H_INCLUDED
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

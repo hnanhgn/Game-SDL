@@ -11,7 +11,3 @@ void dropSeed( SDL_Rect& playerRect);
 void pickFlower(SDL_Rect& playerRect);
 
 #endif // CHARACTERMOVEMENT_H_INCLUDED
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

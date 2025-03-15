@@ -75,7 +75,4 @@ void pickFlower(SDL_Rect& playerRect) {
         }
     }
 }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes

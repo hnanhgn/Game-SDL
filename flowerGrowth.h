@@ -6,3 +6,7 @@
 void updateFlower();
 
 #endif // FLOWERGROWTH_H_INCLUDED
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

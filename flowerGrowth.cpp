@@ -18,3 +18,7 @@ void updateFlower() {
 
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

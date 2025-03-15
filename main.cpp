@@ -96,10 +96,10 @@ int main(int argc, char* argv[])
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
                 dropSeed(playerRect);
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
-                pickFlower(playerRect); // Gọi hàm hái hoa
+                pickFlower(playerRect);
 
         }
-        updateScore(renderer, font);
+
 
         updateMovement(playerRect);
 
@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
         drawPlants( renderer,  seed, sprout, bud, flower);
         SDL_RenderCopy(renderer, character, nullptr, &playerRect);
 
-
+        updateScore(renderer, font);
 
         SDL_RenderPresent(renderer);
         SDL_Delay(16);

@@ -61,12 +61,12 @@ void pickFlower(SDL_Rect& playerRect) {
     for (auto it = plants.begin(); it != plants.end(); ++it) {
         if (it->stage == FLOWER_STAGE) {
             SDL_Rect flowerRect = it->rect;
-            flowerRect.w = 40; // Kích thước lớn nhất của hoa
+            flowerRect.w = 40;
             flowerRect.h = 40;
             flowerRect.x = it->rect.x - 10;
             flowerRect.y = it->rect.y - 10;
 
-            // Kiểm tra va chạm với nhân vật (gần hoa)
+
             if (SDL_HasIntersection(&playerRect, &flowerRect)) {
                 plants.erase(it);
                 score += 1;

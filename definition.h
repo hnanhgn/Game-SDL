@@ -10,20 +10,31 @@ using namespace std;
 const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 700;
 const string WINDOW_TITLE = "Loobee";
-const int CHARACTER_WIDTH = 70;
-const int CHARACTER_HEIGHT = 70;
+
+const int CHARACTER_WIDTH = 135;
+const int CHARACTER_HEIGHT = 100;
 const int CHARACTER_SPEED = 10;
+
 const int GRID_SIZE = 30;
 
+const int BEE_SPEED = 4;
 
 extern SDL_Rect playerRect ;
 extern SDL_Renderer* renderer;
-extern SDL_Texture* character ;
-extern SDL_Texture* background ;
+//extern SDL_Texture* character ;
+//extern SDL_Texture* background ;
+
+extern SDL_Rect playButton;
+extern SDL_Rect directionButton;
+
+const float MIN_DISTANCE_TO_FLOWER = 200.0f;
+const float WAVE_AMPLITUDE = 1.0f;            // Độ lớn dao động lượn sóng
+const float WAVE_FREQUENCY = 0.02f;            // Tần số dao động
+const float COLLECTING_TIME = 3000;
+
 
 extern int score;
 
-//extern vector<vector<bool>> seedGrid;
 enum PlantStage { SEED_STAGE, BUD_STAGE, SPROUT_STAGE, FLOWER_STAGE };
 
 struct Plant {
@@ -34,5 +45,14 @@ struct Plant {
 
 extern Uint32 currentTime ;
 extern vector<Plant> plants;
+
+struct Bee {
+    SDL_Rect rect;
+    Uint32 moveTime;
+    float collectTime;
+    float velocityX;
+    float velocityY;
+};
+extern vector<Bee> bees;
 
 #endif // DEFINITION_H_INCLUDED

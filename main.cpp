@@ -10,6 +10,7 @@
 #include "characterMovement.h"
 #include "flowerGrowth.h"
 #include "updateScore.h"
+#include "beeOperation.h"
 
 using namespace std;
 
@@ -66,61 +67,96 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer;
     initSDL(window, renderer);
 
-
-
     TTF_Init();
     TTF_Font* font = TTF_OpenFont("LoveDays-2v7Oe.ttf", 24);
 
     SDL_Texture* background = loadTexture("background.png", renderer);
-    SDL_Texture* character = loadTexture("character.png", renderer);
+
+    SDL_Texture* character1 = loadTexture("flyStep1.png", renderer);
+    SDL_Texture* character2 = loadTexture("flyStep2.png", renderer);
+    SDL_Texture* character3 = loadTexture("flyStep3.png", renderer);
+
     SDL_Texture* seed = loadTexture("seed.png", renderer);
     SDL_Texture* sprout = loadTexture("sprout.png", renderer);
     SDL_Texture* bud = loadTexture("bud.png", renderer);
     SDL_Texture* flower = loadTexture("flower.png", renderer);
-    if (!background || !character) {
-        cout << "Failed to load textures." << endl;
-        return -1;
-    }
+
+    SDL_Texture* bee = loadTexture("bee.png", renderer);
+
+    SDL_Texture* welcome = loadTexture("welcomeBg.png", renderer);
+    SDL_Texture* playIcon = loadTexture("playButton.png", renderer);
+    SDL_Texture* directionIcon = loadTexture("directionButton.png", renderer);
 
     bool running = true;
+    bool facingLeft = false;
+    bool showWelcomeScreen = true;
     SDL_Event event;
 
     while (running)
+{
+    currentTime = SDL_GetTicks();
+
+    while (SDL_PollEvent(&event))
     {
+        if (event.type == SDL_QUIT)
+            running = false;
 
-        currentTime = SDL_GetTicks();
-        while (SDL_PollEvent(&event)){
-
-            if (event.type == SDL_QUIT)
-                running = false;
+        if (!showWelcomeScreen)
+        {
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
                 dropSeed(playerRect);
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
                 pickFlower(playerRect);
-
+            if (event.key.keysym.sym == SDLK_LEFT)
+                facingLeft = true;
+            if (event.key.keysym.sym == SDLK_RIGHT)
+                facingLeft = false;
         }
 
+        if (showWelcomeScreen)
+        {
+            drawWelcomeScreen(renderer, welcome, playIcon, directionIcon);
 
+            if (event.type == SDL_MOUSEBUTTONDOWN) {
+                int mouseX = event.button.x;
+                int mouseY = event.button.y;
+                SDL_Point mousePoint = {mouseX, mouseY};
+
+                if (SDL_PointInRect(&mousePoint, &playButton))
+                    showWelcomeScreen = false;
+            }
+
+            SDL_RenderPresent(renderer);
+
+        }
+    }
+
+    if (!showWelcomeScreen)
+    {
         updateMovement(playerRect);
-
         updateFlower();
+        moveBee(bees, plants);
 
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, background, nullptr, nullptr);
 
-        drawPlants( renderer,  seed, sprout, bud, flower);
-        SDL_RenderCopy(renderer, character, nullptr, &playerRect);
+        addBees(score);
+        drawBees(renderer, bee);
+
+        drawPlants(renderer, seed, sprout, bud, flower);
+        drawCharacter(renderer, character1, character2, character3, facingLeft);
 
         updateScore(renderer, font);
 
         SDL_RenderPresent(renderer);
-        SDL_Delay(16);
+        SDL_Delay(16); // ~60 FPS
     }
+}
+
+
     TTF_CloseFont(font);
     TTF_Quit();
     SDL_DestroyTexture(background);
-    SDL_DestroyTexture(character);
     quitSDL(window, renderer);
     return 0;
 }
-

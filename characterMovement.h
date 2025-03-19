@@ -2,11 +2,10 @@
 #define CHARACTERMOVEMENT_H_INCLUDED
 
 #include <SDL.h>
-#include <vector>
 
 using namespace std;
 
-void updateMovement(SDL_Rect& playerRect);
+void updateMovement (SDL_Rect& playerRect);
 void dropSeed( SDL_Rect& playerRect);
 void pickFlower(SDL_Rect& playerRect);
 

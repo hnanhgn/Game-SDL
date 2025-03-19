@@ -25,10 +25,35 @@ SDL_Texture* loadTexture( std::string path, SDL_Renderer* renderer )
     return newTexture;
 }
 
-void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character)
+/*void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character)
 {
     SDL_RenderCopy(renderer, character, nullptr, &playerRect);
     SDL_RenderPresent(renderer);
+
+}*/
+
+void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character1, SDL_Texture* character2, SDL_Texture* character3, bool facingLeft) {
+    static Uint32 lastFrameChange = 0;
+    static int frame = 0;
+    static int direction = 1; // 1: tiến lên, -1: lùi xuống
+
+    if (SDL_GetTicks() - lastFrameChange > 200) {  // Đổi khung hình mỗi 200ms
+        frame += direction;
+
+        if (frame == 3) direction = -1;
+        if (frame == 1) direction = 1;
+
+        lastFrameChange = SDL_GetTicks();
+    }
+
+    SDL_Texture* currentCharacter = nullptr;
+    if (frame == 1) currentCharacter = character1;
+    if (frame == 2) currentCharacter = character2;
+    if (frame == 3) currentCharacter = character3;
+
+    SDL_RendererFlip flipType = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
+    SDL_RenderCopyEx(renderer, currentCharacter, nullptr, &playerRect, 0, nullptr, flipType);
 
 }
 
@@ -82,4 +107,16 @@ void drawPlants(SDL_Renderer* renderer, SDL_Texture* seed, SDL_Texture* sprout,S
             SDL_RenderCopy(renderer, texture, nullptr, &drawRect);
 
     }
+}
+
+void drawBees(SDL_Renderer* renderer, SDL_Texture* bee) {
+    for (auto& aBee : bees) {
+        SDL_RenderCopy(renderer, bee, nullptr, &aBee.rect);
+    }
+}
+
+void drawWelcomeScreen(SDL_Renderer* renderer, SDL_Texture* welcome, SDL_Texture* playIcon, SDL_Texture* directionIcon) {
+    SDL_RenderCopy(renderer, welcome, nullptr, nullptr);
+    SDL_RenderCopy(renderer, playIcon, nullptr, &playButton);
+    SDL_RenderCopy(renderer, directionIcon, nullptr, &directionButton);
 }

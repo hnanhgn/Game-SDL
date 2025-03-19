@@ -37,15 +37,22 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.x += cos(angle) * 0.5f;
                 bee.rect.y += sin(angle) * 0.5f;
             }
-            if (minDistance < 10.0f) {
-                if (bee.collectTime == 0)
-                        bee.collectTime = currentTime;
+            if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
+            // Đã đủ 4 giây ong hút mật, tiến hành loại bỏ hoa
 
-                if (currentTime - bee.collectTime >= 4000) {
-                    plants.erase(plants.begin(), plants.end());
-                    bee.collectTime = 0;
+            // Tìm hoa mà ong đang hút mật
+                for (auto flower = plants.begin(); flower != plants.end(); ++flower) {
+                    if (flower.rect == nearestFlower) {
+                        // Xóa hoa khỏi vườn
+                        plants.erase(flower);
+                        break;  // Thoát vòng lặp ngay khi đã tìm thấy hoa
+                    }
                 }
+
+                // Reset thời gian hút mật của ong để chuẩn bị cho lần tiếp theo
+                bee.collectTime = 0;
             }
+
         }
 
         else {

@@ -34,8 +34,6 @@
 		</Compiler>
 		<Unit filename="beeOperation.cpp" />
 		<Unit filename="beeOperation.h" />
-		<Unit filename="button.cpp" />
-		<Unit filename="button.h" />
 		<Unit filename="characterMovement.cpp" />
 		<Unit filename="characterMovement.h" />
 		<Unit filename="definition.cpp" />

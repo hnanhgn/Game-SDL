@@ -120,3 +120,25 @@ void drawWelcomeScreen(SDL_Renderer* renderer, SDL_Texture* welcome, SDL_Texture
     SDL_RenderCopy(renderer, playIcon, nullptr, &playButton);
     SDL_RenderCopy(renderer, directionIcon, nullptr, &directionButton);
 }
+
+void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)
+{
+    int DELAY_TIME = 600;
+
+
+    SDL_Rect srcRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+    SDL_Rect destRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
+    for (int i = 0; i < 6; ++i) {
+        srcRect.x = i * srcRect.w;
+
+        //SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, beforeGame, &srcRect, &destRect);
+        SDL_RenderPresent(renderer);
+
+        SDL_Delay(DELAY_TIME);
+    }
+
+
+}
+

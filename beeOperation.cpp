@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "definition.h"
+#include "flowerGrowth.h"
 
 void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 {
@@ -37,27 +38,15 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.x += cos(angle) * 0.5f;
                 bee.rect.y += sin(angle) * 0.5f;
             }
+            if (bee.collectTime == 0 )
+                bee.collectTime = currentTime;
             if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
-                /*for (auto flower = plants.begin(); flower != plants.end(); ++flower) {
-                    if (flower.rect == nearestFlower) {
 
-                        plants.erase(flower);
-                        break;
-                    }
-                }
+                plants.erase(std::remove_if(plants.begin(), plants.end(),
+                    [&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); }), plants.end());
 
-                bee.collectTime = 0;*/
-
-                auto it = std::find_if(plants.begin(), plants.end(),
-                    [&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); });
-
-                if (it != plants.end()) {
-                    plants.erase(it);  // Xóa hoa khỏi vườn nếu tìm thấy
-                    bee.collectTime = 0;  // Reset thời gian hút mật
-                }
-
+                bee.collectTime = 0;  // Reset thời gian hút mật
             }
-
         }
 
         else {

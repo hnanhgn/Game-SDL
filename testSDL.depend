@@ -5,7 +5,7 @@
 	<iomanip>
 	<SDL.h>
 
-1742407274 source:c:\users\admin\documents\project game\testsdl\main.cpp
+1742411069 source:c:\users\admin\documents\project game\testsdl\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -23,7 +23,7 @@
 	<SDL.h>
 	"definition.h"
 
-1742407274 c:\users\admin\documents\project game\testsdl\definition.h
+1742410893 c:\users\admin\documents\project game\testsdl\definition.h
 	<string>
 	<SDL.h>
 	<vector>
@@ -33,14 +33,14 @@
 	<vector>
 	"definition.h"
 
-1742374038 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
+1742411129 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<string>
 	"definition.h"
 
-1742374038 c:\users\admin\documents\project game\testsdl\texturemanager.h
+1742410893 c:\users\admin\documents\project game\testsdl\texturemanager.h
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -51,10 +51,10 @@
 	"textureManager.h"
 	"definition.h"
 
-1742260617 c:\users\admin\documents\project game\testsdl\charactermovement.h
+1742410893 c:\users\admin\documents\project game\testsdl\charactermovement.h
 	<SDL.h>
 
-1742377411 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+1742411067 source:c:\users\admin\documents\project game\testsdl\definition.cpp
 	<SDL.h>
 	"definition.h"
 
@@ -81,16 +81,18 @@
 
 1742059550 c:\users\admin\documents\project game\testsdl\updatescore.h
 
-1742152250 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
+1742441748 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
 	<SDL.h>
 	<cmath>
 	<cfloat>
 	<cstdlib>
+	<vector>
+	<algorithm>
 	"definition.h"
 
-1742407274 c:\users\admin\documents\project game\testsdl\beeoperation.h
+1742410893 c:\users\admin\documents\project game\testsdl\beeoperation.h
 
-1742374182 source:c:\users\admin\documents\project game\testsdl\button.cpp
+1742410893 source:c:\users\admin\documents\project game\testsdl\button.cpp
 	<SDL.h>
 	<iostream>
 	<SDL_mixer.h>

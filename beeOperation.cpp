@@ -3,7 +3,7 @@
 #include <cfloat>
 #include <cstdlib>
 #include <vector>
-
+#include <algorithm>
 
 #include "definition.h"
 
@@ -38,19 +38,24 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.y += sin(angle) * 0.5f;
             }
             if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
-            // Đã đủ 4 giây ong hút mật, tiến hành loại bỏ hoa
-
-            // Tìm hoa mà ong đang hút mật
-                for (auto flower = plants.begin(); flower != plants.end(); ++flower) {
+                /*for (auto flower = plants.begin(); flower != plants.end(); ++flower) {
                     if (flower.rect == nearestFlower) {
-                        // Xóa hoa khỏi vườn
+
                         plants.erase(flower);
-                        break;  // Thoát vòng lặp ngay khi đã tìm thấy hoa
+                        break;
                     }
                 }
 
-                // Reset thời gian hút mật của ong để chuẩn bị cho lần tiếp theo
-                bee.collectTime = 0;
+                bee.collectTime = 0;*/
+
+                auto it = std::find_if(plants.begin(), plants.end(),
+                    [&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); });
+
+                if (it != plants.end()) {
+                    plants.erase(it);  // Xóa hoa khỏi vườn nếu tìm thấy
+                    bee.collectTime = 0;  // Reset thời gian hút mật
+                }
+
             }
 
         }

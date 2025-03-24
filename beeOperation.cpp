@@ -88,7 +88,7 @@ void addBees(int score) {
         (score == 50 && bees.size() == 3) ||
         (score == 80 && bees.size() == 4)) {
         Bee newBee;
-        newBee.rect = {rand() % 800, rand() % 600, 40, 40};
+        newBee.rect = {rand() % 800, rand() % 600, BEE_WIDTH, BEE_HEIGHT};
         newBee.moveTime = SDL_GetTicks();
 
         newBee.velocityX = (rand() % (2 * BEE_SPEED)) - BEE_SPEED;

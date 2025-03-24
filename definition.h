@@ -5,24 +5,26 @@
 #include <SDL.h>
 #include <vector>
 
+#include "textureManager.h"
+
 using namespace std;
 
 const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 700;
 const string WINDOW_TITLE = "Loobee";
 
-const int CHARACTER_WIDTH = 135;
-const int CHARACTER_HEIGHT = 100;
+const int CHARACTER_WIDTH = 150;
+const int CHARACTER_HEIGHT = 130;
 const int CHARACTER_SPEED = 10;
 
 const int GRID_SIZE = 30;
 
+const int BEE_WIDTH = 60;
+const int BEE_HEIGHT = 60;
 const int BEE_SPEED = 4;
 
 extern SDL_Rect playerRect ;
 extern SDL_Renderer* renderer;
-//extern SDL_Texture* character ;
-//extern SDL_Texture* background ;
 
 extern SDL_Rect playButton;
 extern SDL_Rect directionButton;
@@ -54,5 +56,36 @@ struct Bee {
     float velocityY;
 };
 extern vector<Bee> bees;
+
+extern int lives;
+const int HEART_WIDTH = 40;
+const int HEART_HEIGHT = 40;
+extern vector<SDL_Rect> hearts;
+
+SDL_Texture* loadTexture(const char* file, SDL_Renderer* renderer);
+
+extern SDL_Texture* background;
+extern SDL_Texture* beforeGame;
+
+extern SDL_Texture* character1;
+extern SDL_Texture* character2;
+extern SDL_Texture* character3;
+
+extern SDL_Texture* seed;
+extern SDL_Texture* sprout;
+extern SDL_Texture* bud;
+extern SDL_Texture* flower;
+
+extern SDL_Texture* bee;
+
+extern SDL_Texture* welcome;
+extern SDL_Texture* playIcon;
+extern SDL_Texture* directionIcon;
+
+extern SDL_Texture* dizzy1;
+extern SDL_Texture* dizzy2;
+
+extern SDL_Texture* heart;
+void loadTextures(SDL_Renderer* renderer);
 
 #endif // DEFINITION_H_INCLUDED

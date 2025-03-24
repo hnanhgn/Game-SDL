@@ -7,37 +7,32 @@
 
 using namespace std;
 
-SDL_Texture* loadTexture( std::string path, SDL_Renderer* renderer )
+SDL_Texture* loadTexture(const char* path, SDL_Renderer* renderer)
 {
     SDL_Texture* newTexture = NULL;
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    if ( loadedSurface == NULL )
+    SDL_Surface* loadedSurface = IMG_Load(path);
+    if (loadedSurface == NULL)
         cout << "Unable to load image " << path << " SDL_image Error: "
              << IMG_GetError() << endl;
     else
     {
-        newTexture = SDL_CreateTextureFromSurface( renderer, loadedSurface );
-        if( newTexture == NULL )
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+        if (newTexture == NULL)
             cout << "Unable to create texture from " << path << " SDL Error: "
                  << SDL_GetError() << endl;
-        SDL_FreeSurface( loadedSurface );
+        SDL_FreeSurface(loadedSurface);
     }
     return newTexture;
 }
 
-/*void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character)
+
+void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character1, SDL_Texture* character2, SDL_Texture* character3, bool facingLeft)
 {
-    SDL_RenderCopy(renderer, character, nullptr, &playerRect);
-    SDL_RenderPresent(renderer);
-
-}*/
-
-void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character1, SDL_Texture* character2, SDL_Texture* character3, bool facingLeft) {
     static Uint32 lastFrameChange = 0;
     static int frame = 0;
-    static int direction = 1; // 1: tiến lên, -1: lùi xuống
+    static int direction = 1;
 
-    if (SDL_GetTicks() - lastFrameChange > 200) {  // Đổi khung hình mỗi 200ms
+    if (SDL_GetTicks() - lastFrameChange > 200) {
         frame += direction;
 
         if (frame == 3) direction = -1;
@@ -140,5 +135,20 @@ void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)
     }
 
 
+}
+
+
+void drawHearts(SDL_Renderer* renderer, SDL_Texture* heart) {
+    // Nếu vector hearts trống, khởi tạo vị trí 5 trái tim
+    if (hearts.empty()) {
+        for (int i = 0; i < 5; i++) {
+            SDL_Rect heartRect = { 10 + i * (HEART_WIDTH + 5), 10, HEART_WIDTH, HEART_HEIGHT };
+            hearts.push_back(heartRect);
+        }
+    }
+    // Vẽ số trái tim tương ứng với số mạng còn lại (lives)
+    for (int i = 0; i < lives; i++) {
+        SDL_RenderCopy(renderer, heart, nullptr, &hearts[i]);
+    }
 }
 

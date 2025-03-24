@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     TTF_Init();
     TTF_Font* font = TTF_OpenFont("LoveDays-2v7Oe.ttf", 24);
 
-    SDL_Texture* background = loadTexture("background.png", renderer);
+    /*SDL_Texture* background = loadTexture("background.png", renderer);
     SDL_Texture* beforeGame = loadTexture("beforeGame.png", renderer);
 
     SDL_Texture* character1 = loadTexture("flyStep1.png", renderer);
@@ -86,13 +86,18 @@ int main(int argc, char* argv[])
     SDL_Texture* playIcon = loadTexture("playButton.png", renderer);
     SDL_Texture* directionIcon = loadTexture("directionButton.png", renderer);
 
+    SDL_Texture* dizzy1 = loadTexture("dizzy1.png", renderer);
+    SDL_Texture* dizzy2 = loadTexture("dizzy2.png", renderer);
+*/
 
-
+    loadTextures(renderer);
     bool running = true;
     bool facingLeft = false;
     bool showWelcomeScreen = true;
     bool showLoadingScreen = true;
     bool loaded = false;
+    bool inContactWithBee  ;
+    Uint32 dizzyStartTime = 0;
     SDL_Event event;
 
     while (running)
@@ -127,7 +132,7 @@ int main(int argc, char* argv[])
 
                     if (SDL_PointInRect(&mousePoint, &playButton))
                         showWelcomeScreen = false;
-                        showLoadingScreen = true;  // Bật trạng thái loading
+                        showLoadingScreen = true;
                 }
 
                 SDL_RenderPresent(renderer);
@@ -150,6 +155,8 @@ int main(int argc, char* argv[])
             updateFlower();
             moveBee(bees, plants);
 
+            handleCollisionWithBee(renderer, dizzy1, dizzy2, playerRect, lives,  dizzyStartTime);
+
             SDL_RenderClear(renderer);
             SDL_RenderCopy(renderer, background, nullptr, nullptr);
 
@@ -158,6 +165,8 @@ int main(int argc, char* argv[])
 
             drawPlants(renderer, seed, sprout, bud, flower);
             drawCharacter(renderer, character1, character2, character3, facingLeft);
+
+            drawHearts(renderer, heart);
 
             updateScore(renderer, font);
 

@@ -5,7 +5,7 @@
 	<iomanip>
 	<SDL.h>
 
-1742503269 source:c:\users\admin\documents\project game\testsdl\main.cpp
+1742804903 source:c:\users\admin\documents\project game\testsdl\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -23,24 +23,27 @@
 	<SDL.h>
 	"definition.h"
 
-1742410893 c:\users\admin\documents\project game\testsdl\definition.h
+1742755062 c:\users\admin\documents\project game\testsdl\definition.h
 	<string>
 	<SDL.h>
 	<vector>
+	"textureManager.h"
 
-1742258523 source:c:\users\admin\documents\project game\testsdl\charactermovement.cpp
+1742805186 source:c:\users\admin\documents\project game\testsdl\charactermovement.cpp
 	<SDL.h>
 	<vector>
+	"characterMovement.h"
 	"definition.h"
+	"textureManager.h"
 
-1742502961 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
+1742803535 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<string>
 	"definition.h"
 
-1742502961 c:\users\admin\documents\project game\testsdl\texturemanager.h
+1742756097 c:\users\admin\documents\project game\testsdl\texturemanager.h
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -51,12 +54,17 @@
 	"textureManager.h"
 	"definition.h"
 
-1742410893 c:\users\admin\documents\project game\testsdl\charactermovement.h
-	<SDL.h>
-
-1742411067 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+1742805034 c:\users\admin\documents\project game\testsdl\charactermovement.h
 	<SDL.h>
 	"definition.h"
+	"textureManager.h"
+
+1742756031 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	"definition.h"
+	"textureManager.h"
 
 1741366827 source:c:\users\admin\documents\project game\testsdl\drawdetails.cpp
 	<SDL.h>
@@ -81,7 +89,7 @@
 
 1742059550 c:\users\admin\documents\project game\testsdl\updatescore.h
 
-1742462588 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
+1742667510 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
 	<SDL.h>
 	<cmath>
 	<cfloat>

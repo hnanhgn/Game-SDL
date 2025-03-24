@@ -1,6 +1,9 @@
 #include <SDL.h>
+#include <SDL_image.h>
+#include <string>
 
 #include "definition.h"
+#include "textureManager.h"
 
 using namespace std;
 
@@ -13,3 +16,56 @@ vector<Plant> plants;
 vector<Bee> bees;
 
 int score = 0;
+int lives = 5;
+
+vector<SDL_Rect> hearts;
+
+
+SDL_Texture* background = nullptr;
+SDL_Texture* beforeGame = nullptr;
+
+SDL_Texture* character1 = nullptr;
+SDL_Texture* character2 = nullptr;
+SDL_Texture* character3 = nullptr;
+
+SDL_Texture* seed = nullptr;
+SDL_Texture* sprout = nullptr;
+SDL_Texture* bud = nullptr;
+SDL_Texture* flower = nullptr;
+
+SDL_Texture* bee = nullptr;
+
+SDL_Texture* welcome = nullptr;
+SDL_Texture* playIcon = nullptr;
+SDL_Texture* directionIcon = nullptr;
+
+SDL_Texture* dizzy1 = nullptr;
+SDL_Texture* dizzy2 = nullptr;
+
+SDL_Texture* heart = nullptr;
+
+
+void loadTextures(SDL_Renderer* renderer) {
+    background = loadTexture("background.png", renderer);
+    beforeGame = loadTexture("beforeGame.png", renderer);
+
+    character1 = loadTexture("flyStep1.png", renderer);
+    character2 = loadTexture("flyStep2.png", renderer);
+    character3 = loadTexture("flyStep3.png", renderer);
+
+    seed = loadTexture("seed.png", renderer);
+    sprout = loadTexture("sprout.png", renderer);
+    bud = loadTexture("bud.png", renderer);
+    flower = loadTexture("flower.png", renderer);
+
+    bee = loadTexture("bee.png", renderer);
+
+    welcome = loadTexture("welcomeBg.png", renderer);
+    playIcon = loadTexture("playButton.png", renderer);
+    directionIcon = loadTexture("directionButton.png", renderer);
+
+    dizzy1 = loadTexture("dizzy1.png", renderer);
+    dizzy2 = loadTexture("dizzy2.png", renderer);
+
+    heart = loadTexture("heart.png", renderer);
+}

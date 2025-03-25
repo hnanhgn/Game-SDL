@@ -68,36 +68,18 @@ int main(int argc, char* argv[])
     TTF_Init();
     TTF_Font* font = TTF_OpenFont("LoveDays-2v7Oe.ttf", 24);
 
-    /*SDL_Texture* background = loadTexture("background.png", renderer);
-    SDL_Texture* beforeGame = loadTexture("beforeGame.png", renderer);
-
-    SDL_Texture* character1 = loadTexture("flyStep1.png", renderer);
-    SDL_Texture* character2 = loadTexture("flyStep2.png", renderer);
-    SDL_Texture* character3 = loadTexture("flyStep3.png", renderer);
-
-    SDL_Texture* seed = loadTexture("seed.png", renderer);
-    SDL_Texture* sprout = loadTexture("sprout.png", renderer);
-    SDL_Texture* bud = loadTexture("bud.png", renderer);
-    SDL_Texture* flower = loadTexture("flower.png", renderer);
-
-    SDL_Texture* bee = loadTexture("bee.png", renderer);
-
-    SDL_Texture* welcome = loadTexture("welcomeBg.png", renderer);
-    SDL_Texture* playIcon = loadTexture("playButton.png", renderer);
-    SDL_Texture* directionIcon = loadTexture("directionButton.png", renderer);
-
-    SDL_Texture* dizzy1 = loadTexture("dizzy1.png", renderer);
-    SDL_Texture* dizzy2 = loadTexture("dizzy2.png", renderer);
-*/
-
     loadTextures(renderer);
     bool running = true;
     bool facingLeft = false;
     bool showWelcomeScreen = true;
     bool showLoadingScreen = true;
     bool loaded = false;
-    bool inContactWithBee  ;
+    bool inContactWithBee = false  ;
+    bool gameWon = false;
+    bool gameLost = false;
+    Uint32 levelStartTime = 0;
     Uint32 dizzyStartTime = 0;
+    Uint32 currentTime = 0;
     SDL_Event event;
 
     while (running)
@@ -112,9 +94,9 @@ int main(int argc, char* argv[])
             if (!showWelcomeScreen)
             {
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
-                    dropSeed(playerRect);
+                    dropSeed(playerRect, seeds, plantedFlower);
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
-                    pickFlower(playerRect);
+                    pickFlower(playerRect, seeds, plantedFlower);
                 if (event.key.keysym.sym == SDLK_LEFT)
                     facingLeft = true;
                 if (event.key.keysym.sym == SDLK_RIGHT)
@@ -144,6 +126,7 @@ int main(int argc, char* argv[])
             {
                 drawLoadingScreen(renderer, beforeGame);
                 loaded = true;
+                levelStartTime = SDL_GetTicks();
             }
 
 
@@ -152,27 +135,45 @@ int main(int argc, char* argv[])
 
 
             updateMovement(playerRect);
-            updateFlower();
+
+            bool contactNow = checkContactWithBee(playerRect, bees);
+            handleCollisionWithBee(lives, inContactWithBee, dizzyStartTime);
+
+            updateFlowerGrowth(plants);
             moveBee(bees, plants);
 
-            handleCollisionWithBee(renderer, dizzy1, dizzy2, playerRect, lives,  dizzyStartTime);
+            if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost)) {
+                    if (gameWon && level < 4) {
+                        level++; // Tăng level
+                        plantedFlower = 0;
+                        levelStartTime = SDL_GetTicks(); // Đặt lại thời gian cho level mới
+                        gameWon = false;
+                        bees.clear(); // Xóa ong cũ để thêm lại theo beeCount mới
+                    }
+                }
 
             SDL_RenderClear(renderer);
             SDL_RenderCopy(renderer, background, nullptr, nullptr);
 
-            addBees(score);
+            addBees(level);
             drawBees(renderer, bee);
 
-            drawPlants(renderer, seed, sprout, bud, flower);
-            drawCharacter(renderer, character1, character2, character3, facingLeft);
 
-            drawHearts(renderer, heart);
+            drawPlants(renderer, flowerGrowthStep);
 
-            updateScore(renderer, font);
+            drawCharacter(renderer,  character1, character2, character3, dizzy1,  dizzy2,  facingLeft, inContactWithBee, dizzyStartTime);
+
+            drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime,  seeds);
+
+            if (gameLost) {
+                SDL_Rect gameOverRect = {SCREEN_WIDTH / 2 - 750 / 2, SCREEN_HEIGHT / 2 - 550 / 2, 750, 550};
+                SDL_RenderCopy(renderer, gameOver, nullptr, &gameOverRect);
+            }
 
             SDL_RenderPresent(renderer);
             SDL_Delay(16); // ~60 FPS
         }
+
     }
 
 

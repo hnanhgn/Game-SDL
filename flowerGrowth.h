@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
-void updateFlower();
+#include "definition.h"
+
+void updateFlowerGrowth(std::vector<Plant>& plants);
 
 #endif // FLOWERGROWTH_H_INCLUDED

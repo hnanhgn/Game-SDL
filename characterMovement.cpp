@@ -37,46 +37,36 @@ void updateMovement (SDL_Rect& playerRect)
 
 }
 
-void dropSeed( SDL_Rect& playerRect)
-{
 
-    int row = playerRect.y / (GRID_SIZE * 2);
-    int col = playerRect.x / (GRID_SIZE * 2);
 
-    SDL_Rect cellRect = { col * GRID_SIZE * 2, row * GRID_SIZE * 2, 20, 20 };
+void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
+    if (seeds >= 2) { // Cần ít nhất 2 hạt giống để gieo 1 hoa
+        // Logic gieo hạt giống (giả định plants là danh sách toàn cục)
+        Plant newPlant;
+        newPlant.rect = {playerRect.x, playerRect.y, 20, 20}; // Vị trí gieo
+        newPlant.stage = SEED; // Trạng thái ban đầu là hạt
+        newPlant.plantedTime = SDL_GetTicks();
+        plants.push_back(newPlant);
 
-    for (const auto& plant : plants) {
-        if (plant.rect.x == cellRect.x && plant.rect.y == cellRect.y) {
-
-            return;
-        }
+        seeds -= 2;          // Trừ 2 hạt giống
+        //plantedFlowers += 1; // Tăng số hoa đã gieo
     }
-
-    Plant newPlant;
-    newPlant.rect.x = playerRect.x + (CHARACTER_WIDTH / 2) - (GRID_SIZE / 2);
-    newPlant.rect.y = playerRect.y + CHARACTER_HEIGHT - (GRID_SIZE / 2);
-    newPlant.rect.w = GRID_SIZE;
-    newPlant.rect.h = GRID_SIZE;
-    newPlant.stage = SEED_STAGE;
-    newPlant.plantedTime = SDL_GetTicks();
-
-    plants.push_back(newPlant);
 }
 
-void pickFlower(SDL_Rect& playerRect) {
+void pickFlower(SDL_Rect& playerRect, int& seeds, int& plantedFlower) {
     for (auto it = plants.begin(); it != plants.end(); ++it) {
-        if (it->stage == FLOWER_STAGE) {
+        if (it->stage == WILT) { // Kiểm tra hoa đã héo (sẵn sàng hái)
             SDL_Rect flowerRect = it->rect;
             flowerRect.w = 40;
             flowerRect.h = 40;
             flowerRect.x = it->rect.x - 10;
             flowerRect.y = it->rect.y - 10;
 
-
             if (SDL_HasIntersection(&playerRect, &flowerRect)) {
-                plants.erase(it);
-                score += 1;
-                break;
+                plants.erase(it); // Xóa bông hoa đã hái
+                plantedFlower += 1;       // Tăng điểm
+                seeds += 3;       // Mỗi bông hoa cho 3 hạt giống
+                break;            // Chỉ hái 1 hoa mỗi lần gọi
             }
         }
     }
@@ -98,33 +88,16 @@ bool checkContactWithBee (SDL_Rect& characterRect, vector<Bee>& bees) {
     return false;
 }
 
-void handleCollisionWithBee(SDL_Renderer* renderer, SDL_Texture* dizzy1, SDL_Texture* dizzy2,
-                              SDL_Rect& playerRect, int& lives, Uint32& dizzyStartTime)
+void handleCollisionWithBee(int& lives, bool& inContactWithBee, Uint32& dizzyStartTime)
 {
-    // Kiểm tra va chạm giữa nhân vật và các ong
-    bool contactNow = checkContactWithBee(playerRect, bees);
+    bool contactNow = checkContactWithBee(playerRect, bees); // Kiểm tra va chạm
 
-    // Sử dụng static để đảm bảo mỗi lần va chạm mới chỉ trừ 1 mạng
-    static bool collisionHandled = false;
-
-    if (contactNow) {
-        if (!collisionHandled) {
-            // Lần va chạm đầu tiên của sự kiện hiện tại: trừ 1 mạng và ghi lại thời gian bắt đầu hiệu ứng
-            lives--;
-            collisionHandled = true;
-            dizzyStartTime = SDL_GetTicks();
-        }
-
-        // Hiển thị hiệu ứng dizzy trong 2 giây kể từ khi va chạm bắt đầu
-        Uint32 elapsed = SDL_GetTicks() - dizzyStartTime;
-
-            // Thay đổi frame mỗi 300ms để tạo hiệu ứng nhấp nháy
-            SDL_Texture* dizzyTexture = (elapsed / 300) % 2 == 0 ? dizzy1 : dizzy2;
-            SDL_RenderCopy(renderer, dizzyTexture, nullptr, &playerRect);
-
+    if (contactNow && !inContactWithBee) { // Chỉ trừ mạng khi vừa mới chạm ong
+        lives--; // Giảm mạng
+        inContactWithBee = true; // Đánh dấu đang chạm ong
+        dizzyStartTime = SDL_GetTicks(); // Bắt đầu thời gian "choáng"
     }
-    else {
-        // Khi không còn va chạm, reset trạng thái để sẵn sàng cho lần va chạm mới
-        collisionHandled = false;
+    else if (!contactNow && inContactWithBee) { // Khi không còn chạm ong nữa
+        inContactWithBee = false; // Đặt lại trạng thái
     }
 }

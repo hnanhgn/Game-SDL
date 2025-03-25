@@ -15,12 +15,14 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 
         SDL_Rect nearestFlower ;
         float minDistance = FLT_MAX;
+        Plant* targetFlower = nullptr;
 
         for(auto& flower : plants ){
             float distance = sqrt( (flower.rect.x - bee.rect.x) * (flower.rect.x - bee.rect.x) + (flower.rect.y - bee.rect.y) * (flower.rect.y - bee.rect.y) );
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestFlower = flower.rect;
+                targetFlower = &flower;
             }
 
         }
@@ -38,14 +40,16 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.x += cos(angle) * 0.5f;
                 bee.rect.y += sin(angle) * 0.5f;
             }
-            if (bee.collectTime == 0 )
-                bee.collectTime = currentTime;
-            if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
 
-                plants.erase(std::remove_if(plants.begin(), plants.end(),
-                    [&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); }), plants.end());
+            if (targetFlower && targetFlower->stage == WILT) { // Chỉ hút khi hoa ở trạng thái WILT
+                if (bee.collectTime == 0)
+                    bee.collectTime = currentTime; // Bắt đầu đếm thời gian hút mật
 
-                bee.collectTime = 0;  // Reset thời gian hút mật
+                if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
+                    // Xóa hoa khi đã hút mật đủ 4 giây
+                    plants.erase( std::remove_if(plants.begin(), plants.end(),[&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); }),plants.end() );
+                    bee.collectTime = 0; // Reset thời gian hút mật
+                }
             }
         }
 
@@ -82,11 +86,11 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 
 }
 
-void addBees(int score) {
-    if ((score == 10 && bees.size() == 0) ||
-        (score == 30 && bees.size() == 1) ||
-        (score == 50 && bees.size() == 3) ||
-        (score == 80 && bees.size() == 4)) {
+void addBees(int level) {
+    if ((level == 2 && bees.size() == 0) ||
+        (level == 3 && bees.size() == 1) ||
+        (level == 4 && bees.size() == 2) ||
+        (level == 5 && bees.size() == 3)) {
         Bee newBee;
         newBee.rect = {rand() % 800, rand() % 600, BEE_WIDTH, BEE_HEIGHT};
         newBee.moveTime = SDL_GetTicks();

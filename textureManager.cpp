@@ -2,8 +2,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <vector>
 
+#include "textureManager.h"
 #include "definition.h"
+
 
 using namespace std;
 
@@ -26,30 +29,38 @@ SDL_Texture* loadTexture(const char* path, SDL_Renderer* renderer)
 }
 
 
-void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character1, SDL_Texture* character2, SDL_Texture* character3, bool facingLeft)
+void drawCharacter(SDL_Renderer* renderer, SDL_Texture* character1, SDL_Texture* character2, SDL_Texture* character3,
+                    SDL_Texture* dizzy1, SDL_Texture* dizzy2, bool facingLeft,
+                    bool inContactWithBee, Uint32 dizzyStartTime)
 {
-    static Uint32 lastFrameChange = 0;
-    static int frame = 0;
-    static int direction = 1;
+    SDL_Texture* currentCharacter = nullptr;
 
-    if (SDL_GetTicks() - lastFrameChange > 200) {
-        frame += direction;
+    // Hiển thị hiệu ứng dizzy nếu nhân vật đang bị choáng
+    if (inContactWithBee && SDL_GetTicks() - dizzyStartTime <= 4000) {
+        currentCharacter = ((SDL_GetTicks() / 300) % 2 == 0) ? dizzy1 : dizzy2;
+    }
+    else {
+        // Duyệt animation bình thường khi không bị choáng
+        static Uint32 lastFrameChange = 0;
+        static int frame = 0;
+        static int direction = 1;
 
-        if (frame == 3) direction = -1;
-        if (frame == 1) direction = 1;
+        if (SDL_GetTicks() - lastFrameChange > 200) {
+            frame += direction;
 
-        lastFrameChange = SDL_GetTicks();
+            if (frame == 3) direction = -1;
+            if (frame == 1) direction = 1;
+
+            lastFrameChange = SDL_GetTicks();
+        }
+
+        if (frame == 1) currentCharacter = character1;
+        if (frame == 2) currentCharacter = character2;
+        if (frame == 3) currentCharacter = character3;
     }
 
-    SDL_Texture* currentCharacter = nullptr;
-    if (frame == 1) currentCharacter = character1;
-    if (frame == 2) currentCharacter = character2;
-    if (frame == 3) currentCharacter = character3;
-
     SDL_RendererFlip flipType = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-
     SDL_RenderCopyEx(renderer, currentCharacter, nullptr, &playerRect, 0, nullptr, flipType);
-
 }
 
 void drawBackground(SDL_Renderer* renderer, SDL_Texture* background)
@@ -60,48 +71,27 @@ void drawBackground(SDL_Renderer* renderer, SDL_Texture* background)
 
 }
 
-void drawPlants(SDL_Renderer* renderer, SDL_Texture* seed, SDL_Texture* sprout,SDL_Texture* bud, SDL_Texture* flower) {
+
+
+void drawPlants(SDL_Renderer* renderer, SDL_Texture* plantTexture) {
+
     for (auto& plant : plants) {
-        SDL_Texture* texture = nullptr;
+        SDL_Rect srcRect;
+        srcRect.x = static_cast<int>(plant.stage) * 267;
+        srcRect.y = 0;
+        srcRect.w = 267;
+        srcRect.h = 187;
+
+
         SDL_Rect drawRect = plant.rect;
+        drawRect.w *= 3;
+        drawRect.h *= 3;
+        drawRect.x -= (drawRect.w - plant.rect.w) / 2;
+        drawRect.y -= (drawRect.h - plant.rect.h) / 2;
 
-        Uint32 elapsedTime = currentTime - plant.plantedTime;
-
-        if (elapsedTime >= 6000) {
-            plant.stage = FLOWER_STAGE;
-            texture = flower;
-            drawRect.w = 80;
-            drawRect.h = 80;
-            drawRect.x = plant.rect.x ;
-            drawRect.y = plant.rect.y - 30;
-        }
-        else if (elapsedTime >= 4000) {
-            plant.stage = BUD_STAGE;
-            texture = bud;
-            drawRect.w = 80;
-            drawRect.h = 70;
-            drawRect.x = plant.rect.x ;
-            drawRect.y = plant.rect.y - 30;
-        }
-        else if (elapsedTime >= 2000) {
-            plant.stage = SPROUT_STAGE;
-            texture = sprout;
-            drawRect.w = 80;
-            drawRect.h = 40;
-            drawRect.x = plant.rect.x - 2;
-            drawRect.y = plant.rect.y - 10;
-        }
-        else {
-            plant.stage = SEED_STAGE;
-            texture = seed;
-            drawRect.w = 20;
-            drawRect.h = 20;
-        }
-
-        if (texture != nullptr)
-            SDL_RenderCopy(renderer, texture, nullptr, &drawRect);
-
+        SDL_RenderCopy(renderer, plantTexture, &srcRect, &drawRect);
     }
+
 }
 
 void drawBees(SDL_Renderer* renderer, SDL_Texture* bee) {
@@ -118,7 +108,7 @@ void drawWelcomeScreen(SDL_Renderer* renderer, SDL_Texture* welcome, SDL_Texture
 
 void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)
 {
-    int DELAY_TIME = 600;
+    int DELAY_TIME = 500;
 
 
     SDL_Rect srcRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -134,21 +124,8 @@ void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)
         SDL_Delay(DELAY_TIME);
     }
 
-
 }
 
 
-void drawHearts(SDL_Renderer* renderer, SDL_Texture* heart) {
-    // Nếu vector hearts trống, khởi tạo vị trí 5 trái tim
-    if (hearts.empty()) {
-        for (int i = 0; i < 5; i++) {
-            SDL_Rect heartRect = { 10 + i * (HEART_WIDTH + 5), 10, HEART_WIDTH, HEART_HEIGHT };
-            hearts.push_back(heartRect);
-        }
-    }
-    // Vẽ số trái tim tương ứng với số mạng còn lại (lives)
-    for (int i = 0; i < lives; i++) {
-        SDL_RenderCopy(renderer, heart, nullptr, &hearts[i]);
-    }
-}
+
 

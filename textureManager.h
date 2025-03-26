@@ -21,7 +21,7 @@ void drawPlants(SDL_Renderer* renderer, SDL_Texture* plantTexture);
 void drawBees(SDL_Renderer* renderer, SDL_Texture* bee);
 void drawWelcomeScreen(SDL_Renderer* renderer, SDL_Texture* welcome, SDL_Texture* playIcon, SDL_Texture* directionIcon);
 void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame);
-//void drawHearts(SDL_Renderer* renderer, SDL_Texture* heart);
+void drawDirection(SDL_Renderer* renderer, bool& showDirection, int& currentPage, SDL_Rect& nextRect, SDL_Rect& backRect, SDL_Rect& closeRect);
 
 
 #endif // TEXTUREMANAGER_H_INCLUDED

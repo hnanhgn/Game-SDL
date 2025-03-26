@@ -40,11 +40,11 @@ void updateMovement (SDL_Rect& playerRect)
 
 
 void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
-    if (seeds >= 2) { // Cần ít nhất 2 hạt giống để gieo 1 hoa
-        // Logic gieo hạt giống (giả định plants là danh sách toàn cục)
+    if (seeds >= 2) {
+
         Plant newPlant;
-        newPlant.rect = {playerRect.x, playerRect.y, 20, 20}; // Vị trí gieo
-        newPlant.stage = SEED; // Trạng thái ban đầu là hạt
+        newPlant.rect = {playerRect.x, playerRect.y, 20, 20};
+        newPlant.stage = SEED;
         newPlant.plantedTime = SDL_GetTicks();
         plants.push_back(newPlant);
 
@@ -55,7 +55,7 @@ void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
 
 void pickFlower(SDL_Rect& playerRect, int& seeds, int& plantedFlower) {
     for (auto it = plants.begin(); it != plants.end(); ++it) {
-        if (it->stage == WILT) { // Kiểm tra hoa đã héo (sẵn sàng hái)
+        if (it->stage == WILT) {
             SDL_Rect flowerRect = it->rect;
             flowerRect.w = 40;
             flowerRect.h = 40;
@@ -63,10 +63,10 @@ void pickFlower(SDL_Rect& playerRect, int& seeds, int& plantedFlower) {
             flowerRect.y = it->rect.y - 10;
 
             if (SDL_HasIntersection(&playerRect, &flowerRect)) {
-                plants.erase(it); // Xóa bông hoa đã hái
-                plantedFlower += 1;       // Tăng điểm
-                seeds += 3;       // Mỗi bông hoa cho 3 hạt giống
-                break;            // Chỉ hái 1 hoa mỗi lần gọi
+                plants.erase(it);
+                plantedFlower += 1;
+                seeds += 3;
+                break;
             }
         }
     }

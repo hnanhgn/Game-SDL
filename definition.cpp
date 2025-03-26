@@ -12,6 +12,12 @@ SDL_Rect playerRect = {SCREEN_WIDTH / 2 - CHARACTER_WIDTH / 2, SCREEN_HEIGHT / 2
 
 SDL_Rect playButton = { 100, 450, 150, 120 };
 SDL_Rect directionButton = { 250, 450, 150, 120 };
+
+
+SDL_Rect nextRect = {350, 520, 50, 20};
+SDL_Rect backRect = {300, 520, 50, 20};
+SDL_Rect closeRect = {720, 150, 60, 50};
+
 Uint32 currentTime = SDL_GetTicks();
 
 vector<Plant> plants;
@@ -22,6 +28,7 @@ int plantedFlower = 0;
 int lives = 5;
 int level = 1;
 int beeCount = 0;
+int currentPage = 1;
 
 vector<SDL_Rect> hearts;
 
@@ -40,6 +47,13 @@ SDL_Texture* bee = nullptr;
 SDL_Texture* welcome = nullptr;
 SDL_Texture* playIcon = nullptr;
 SDL_Texture* directionIcon = nullptr;
+
+SDL_Texture* direction1;
+SDL_Texture* direction2;
+SDL_Texture* nextButton;
+SDL_Texture* backButton;
+SDL_Texture* closeButton;
+
 
 SDL_Texture* dizzy1 = nullptr;
 SDL_Texture* dizzy2 = nullptr;
@@ -63,6 +77,13 @@ void loadTextures(SDL_Renderer* renderer) {
     welcome = loadTexture("welcomeBg.png", renderer);
     playIcon = loadTexture("playButton.png", renderer);
     directionIcon = loadTexture("directionButton.png", renderer);
+
+    direction1 = loadTexture("direction1.png", renderer);
+    direction2 = loadTexture("direction2.png", renderer);
+    nextButton = loadTexture("next.png", renderer);
+    backButton = loadTexture("back.png", renderer);
+    closeButton = loadTexture("close.png", renderer);
+
 
     dizzy1 = loadTexture("dizzy1.png", renderer);
     dizzy2 = loadTexture("dizzy2.png", renderer);

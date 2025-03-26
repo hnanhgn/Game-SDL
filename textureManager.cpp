@@ -127,5 +127,24 @@ void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)
 }
 
 
+void drawDirection(SDL_Renderer* renderer, bool& showDirection, int& currentPage, SDL_Rect& nextRect, SDL_Rect& backRect, SDL_Rect& closeRect)
+{
+    // Vẽ nền direction (màu xám nhạt nếu không có texture nền riêng)
+    /*SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+    SDL_Rect directionBackground = {0, 0, 800, 600}; // Giả định màn hình 800x600
+    SDL_RenderFillRect(renderer, &directionBackground);*/
 
+    // Vẽ trang 1 hoặc trang 2
+    SDL_Rect pageRect = {SCREEN_WIDTH / 2 - 700 / 2, SCREEN_HEIGHT / 2 - 500 / 2,  700, 500}; // Kích thước và vị trí của trang direction
+    if (currentPage == 1) {
+        SDL_RenderCopy(renderer, direction1, nullptr, &pageRect);
+        SDL_RenderCopy(renderer, nextButton, nullptr, &nextRect); // Nút Next
+    }
+    if (currentPage == 2) {
+        SDL_RenderCopy(renderer, direction2, nullptr, &pageRect);
+        SDL_RenderCopy(renderer, backButton, nullptr, &backRect); // Nút Back
+    }
 
+    // Vẽ nút Close
+    SDL_RenderCopy(renderer, closeButton, nullptr, &closeRect);
+}

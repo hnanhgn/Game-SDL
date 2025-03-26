@@ -16,8 +16,8 @@ void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plante
     switch (level) {
         case 1: timeLimit = 40.0f; flowerGoal = 10; break;
         case 2: timeLimit = 70.0f; flowerGoal = 20; break;
-        case 3: timeLimit = 100.0f; flowerGoal = 20; break;
-        case 4: timeLimit = 150.0f; flowerGoal = 30; break;
+        case 3: timeLimit = 100.0f; flowerGoal = 30; break;
+        case 4: timeLimit = 150.0f; flowerGoal = 50; break;
     }
 
     float timeLeft = timeLimit - elapsedTime;
@@ -96,6 +96,7 @@ bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 leve
         }
         break;
     }
+
 
     if (lives <= 0) {
         gameLost = true;

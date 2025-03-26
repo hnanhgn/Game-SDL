@@ -89,8 +89,7 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 void addBees(int level) {
     if ((level == 2 && bees.size() == 0) ||
         (level == 3 && bees.size() == 1) ||
-        (level == 4 && bees.size() == 2) ||
-        (level == 5 && bees.size() == 3)) {
+        (level == 4 && bees.size() == 2) ) {
         Bee newBee;
         newBee.rect = {rand() % 800, rand() % 600, BEE_WIDTH, BEE_HEIGHT};
         newBee.moveTime = SDL_GetTicks();

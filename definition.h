@@ -27,6 +27,11 @@ extern SDL_Renderer* renderer;
 extern SDL_Rect playButton;
 extern SDL_Rect directionButton;
 
+//extern SDL_Rect directionRect; // Nút Direction
+extern SDL_Rect nextRect;      // Nút Next
+extern SDL_Rect backRect;      // Nút Back
+extern SDL_Rect closeRect;      // Nút Close
+
 const float MIN_DISTANCE_TO_FLOWER = 200.0f;
 const float WAVE_AMPLITUDE = 1.0f;
 const float WAVE_FREQUENCY = 0.02f;
@@ -38,6 +43,7 @@ extern int seeds;
 extern int level;
 extern int beeCount;
 extern int lives;
+extern int currentPage;
 
 enum PlantStage { SEED, SPROUT, BUD, BLOOM, WILT };
 
@@ -59,10 +65,6 @@ struct Bee {
 };
 extern vector<Bee> bees;
 
-const int HEART_WIDTH = 50;
-const int HEART_HEIGHT = 40;
-extern vector<SDL_Rect> hearts;
-
 SDL_Texture* loadTexture(const char* file, SDL_Renderer* renderer);
 
 extern SDL_Texture* background;
@@ -79,6 +81,12 @@ extern SDL_Texture* bee;
 extern SDL_Texture* welcome;
 extern SDL_Texture* playIcon;
 extern SDL_Texture* directionIcon;
+
+extern SDL_Texture* direction1;
+extern SDL_Texture* direction2;
+extern SDL_Texture* nextButton;
+extern SDL_Texture* backButton;
+extern SDL_Texture* closeButton;
 
 extern SDL_Texture* dizzy1;
 extern SDL_Texture* dizzy2;

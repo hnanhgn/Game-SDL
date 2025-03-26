@@ -77,105 +77,135 @@ int main(int argc, char* argv[])
     bool inContactWithBee = false  ;
     bool gameWon = false;
     bool gameLost = false;
+    bool showDirection = false;
     Uint32 levelStartTime = 0;
     Uint32 dizzyStartTime = 0;
     Uint32 currentTime = 0;
     SDL_Event event;
 
-    while (running)
-    {
+    while (running) {
         currentTime = SDL_GetTicks();
 
-        while (SDL_PollEvent(&event))
-        {
+        while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 running = false;
 
-            if (!showWelcomeScreen)
-            {
-                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
-                    dropSeed(playerRect, seeds, plantedFlower);
-                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
-                    pickFlower(playerRect, seeds, plantedFlower);
-                if (event.key.keysym.sym == SDLK_LEFT)
-                    facingLeft = true;
-                if (event.key.keysym.sym == SDLK_RIGHT)
-                    facingLeft = false;
+            // Xử lý sự kiện trong welcome screen
+            if (showWelcomeScreen) {
+                if (event.type == SDL_MOUSEBUTTONDOWN) {
+                    int mouseX = event.button.x;
+                    int mouseY = event.button.y;
+                    SDL_Point mousePoint = {mouseX, mouseY};
+
+                    if (SDL_PointInRect(&mousePoint, &playButton)) {
+                        showWelcomeScreen = false;
+                        showLoadingScreen = true;
+                    }
+                    if (!showDirection && SDL_PointInRect(&mousePoint, &directionButton)) {
+                        showDirection = true;
+                        currentPage = 1;
+                    }
+                    if (showDirection) {
+                        if (SDL_PointInRect(&mousePoint, &nextRect) && currentPage == 1) currentPage = 2;
+                        if (SDL_PointInRect(&mousePoint, &backRect) && currentPage == 2) currentPage = 1;
+                        if (SDL_PointInRect(&mousePoint, &closeRect)) showDirection = false;
+                    }
+                }
             }
 
-            if (showWelcomeScreen)
-            {
-                drawWelcomeScreen(renderer, welcome, playIcon, directionIcon);
+            // Xử lý sự kiện trong game
+            if (!showWelcomeScreen && loaded) {
+                if (event.type == SDL_KEYDOWN && !showDirection) {
+                    if (event.key.keysym.sym == SDLK_SPACE)
+                        dropSeed(playerRect, seeds, plantedFlower);
+                    if (event.key.keysym.sym == SDLK_RETURN)
+                        pickFlower(playerRect, seeds, plantedFlower);
+                    if (event.key.keysym.sym == SDLK_LEFT)
+                        facingLeft = true;
+                    if (event.key.keysym.sym == SDLK_RIGHT)
+                        facingLeft = false;
+                }
 
                 if (event.type == SDL_MOUSEBUTTONDOWN) {
                     int mouseX = event.button.x;
                     int mouseY = event.button.y;
                     SDL_Point mousePoint = {mouseX, mouseY};
 
-                    if (SDL_PointInRect(&mousePoint, &playButton))
-                        showWelcomeScreen = false;
-                        showLoadingScreen = true;
+                    if (!showDirection && SDL_PointInRect(&mousePoint, &directionButton)) {
+                        showDirection = true;
+                        currentPage = 1;
+                    }
+                    if (showDirection) {
+                        if (SDL_PointInRect(&mousePoint, &nextRect) && currentPage == 1) currentPage = 2;
+                        if (SDL_PointInRect(&mousePoint, &backRect) && currentPage == 2) currentPage = 1;
+                        if (SDL_PointInRect(&mousePoint, &closeRect)) {
+                            showDirection = false;
+                            currentPage = 1;
+                        }
+                    }
                 }
-
-                SDL_RenderPresent(renderer);
-
             }
         }
 
-        if (showLoadingScreen && !loaded && !showWelcomeScreen)
-            {
-                drawLoadingScreen(renderer, beforeGame);
-                loaded = true;
-                levelStartTime = SDL_GetTicks();
+        SDL_RenderClear(renderer);
+
+        if (showWelcomeScreen) {
+            drawWelcomeScreen(renderer, welcome, playIcon, directionIcon);
+            if (showDirection) {
+                drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
             }
+            SDL_RenderPresent(renderer);
+        }
+        else if (showLoadingScreen && !loaded && !showWelcomeScreen) {
+            drawLoadingScreen(renderer, beforeGame);
+            loaded = true;
+            levelStartTime = SDL_GetTicks();
+            SDL_RenderPresent(renderer);
+        }
+        else if (!showWelcomeScreen && loaded) {
+            if (!showDirection) {
+                updateMovement(playerRect);
+                bool contactNow = checkContactWithBee(playerRect, bees);
+                handleCollisionWithBee(lives, inContactWithBee, dizzyStartTime);
+                updateFlowerGrowth(plants);
+                moveBee(bees, plants);
 
-
-        if (!showWelcomeScreen && loaded)
-        {
-
-
-            updateMovement(playerRect);
-
-            bool contactNow = checkContactWithBee(playerRect, bees);
-            handleCollisionWithBee(lives, inContactWithBee, dizzyStartTime);
-
-            updateFlowerGrowth(plants);
-            moveBee(bees, plants);
-
-            if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost)) {
+                if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost)) {
                     if (gameWon && level < 4) {
-                        level++; // Tăng level
+                        level++;
                         plantedFlower = 0;
-                        levelStartTime = SDL_GetTicks(); // Đặt lại thời gian cho level mới
+                        levelStartTime = SDL_GetTicks();
                         gameWon = false;
-                        bees.clear(); // Xóa ong cũ để thêm lại theo beeCount mới
+                        bees.clear();
                     }
                 }
+            }
 
-            SDL_RenderClear(renderer);
             SDL_RenderCopy(renderer, background, nullptr, nullptr);
-
             addBees(level);
             drawBees(renderer, bee);
-
-
             drawPlants(renderer, flowerGrowthStep);
+            drawCharacter(renderer, character1, character2, character3, dizzy1, dizzy2, facingLeft, inContactWithBee, dizzyStartTime);
+            drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime, seeds);
 
-            drawCharacter(renderer,  character1, character2, character3, dizzy1,  dizzy2,  facingLeft, inContactWithBee, dizzyStartTime);
+            // Vẽ nút Direction trong game
+            //SDL_RenderCopy(renderer, directionIcon, nullptr, &directionButton);
 
-            drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime,  seeds);
+            if (showDirection) {
+                drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
+            }
 
             if (gameLost) {
                 SDL_Rect gameOverRect = {SCREEN_WIDTH / 2 - 750 / 2, SCREEN_HEIGHT / 2 - 550 / 2, 750, 550};
                 SDL_RenderCopy(renderer, gameOver, nullptr, &gameOverRect);
+                SDL_Delay(2000);
+                running = false;
             }
 
             SDL_RenderPresent(renderer);
-            SDL_Delay(16); // ~60 FPS
+            SDL_Delay(16);
         }
-
     }
-
 
     TTF_CloseFont(font);
     TTF_Quit();

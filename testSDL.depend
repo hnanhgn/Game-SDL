@@ -5,7 +5,7 @@
 	<iomanip>
 	<SDL.h>
 
-1743005542 source:c:\users\admin\documents\project game\testsdl\main.cpp
+1743093048 source:c:\users\admin\documents\project game\testsdl\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -18,12 +18,13 @@
 	"flowerGrowth.h"
 	"updateScore.h"
 	"beeOperation.h"
+	"button.h"
 
 1741320427 source:c:\users\admin\documents\project game\testsdl\playermovement.cpp
 	<SDL.h>
 	"definition.h"
 
-1743004737 c:\users\admin\documents\project game\testsdl\definition.h
+1743090452 c:\users\admin\documents\project game\testsdl\definition.h
 	<string>
 	<SDL.h>
 	<vector>
@@ -35,7 +36,7 @@
 	"definition.h"
 	"textureManager.h"
 
-1743010643 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
+1743052810 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -44,7 +45,7 @@
 	"textureManager.h"
 	"definition.h"
 
-1743000960 c:\users\admin\documents\project game\testsdl\texturemanager.h
+1743052810 c:\users\admin\documents\project game\testsdl\texturemanager.h
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -62,7 +63,7 @@
 	"definition.h"
 	"textureManager.h"
 
-1743011284 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+1743091159 source:c:\users\admin\documents\project game\testsdl\definition.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -85,15 +86,16 @@
 	<SDL.h>
 	"definition.h"
 
-1742970723 source:c:\users\admin\documents\project game\testsdl\updatescore.cpp
+1743093036 source:c:\users\admin\documents\project game\testsdl\updatescore.cpp
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
 	"definition.h"
 
-1742920980 c:\users\admin\documents\project game\testsdl\updatescore.h
+1743093036 c:\users\admin\documents\project game\testsdl\updatescore.h
+	<SDL_ttf.h>
 
-1742957505 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
+1743063325 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
 	<SDL.h>
 	<cmath>
 	<cfloat>
@@ -105,9 +107,15 @@
 
 1742921232 c:\users\admin\documents\project game\testsdl\beeoperation.h
 
-1742410893 source:c:\users\admin\documents\project game\testsdl\button.cpp
-	<SDL.h>
+1743091892 source:c:\users\admin\documents\project game\testsdl\button.cpp
+	"Button.h"
 	<iostream>
-	<SDL_mixer.h>
+
+1743090315 c:\users\admin\documents\project game\testsdl\button.h
+	<SDL.h>
+	<vector>
 	"definition.h"
+	"characterMovement.h"
+	"textureManager.h"
+	"updateScore.h"
 

@@ -18,6 +18,16 @@ SDL_Rect nextRect = {350, 520, 50, 20};
 SDL_Rect backRect = {300, 520, 50, 20};
 SDL_Rect closeRect = {720, 150, 60, 50};
 
+SDL_Rect level1Button = {100, 400, 200, 200};
+SDL_Rect level2Button = {250, 500, 200, 200};
+SDL_Rect level3Button = {450, 400, 200, 200};
+SDL_Rect level4Button = {700, 500, 200, 200};
+
+SDL_Rect pauseRect = {750, 430, 300, 250}; // Nút pause ở góc phải dưới
+SDL_Rect pausingRect = {SCREEN_WIDTH / 2 - 550 / 2, SCREEN_HEIGHT / 2 - 450 / 2, 550, 450};
+SDL_Rect continueRect = {SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 10, 180, 100}; // Nút tiếp tục
+SDL_Rect exitRect = {SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT / 2 - 10, 180, 100}; // Nút thoát
+
 Uint32 currentTime = SDL_GetTicks();
 
 vector<Plant> plants;
@@ -54,6 +64,13 @@ SDL_Texture* nextButton;
 SDL_Texture* backButton;
 SDL_Texture* closeButton;
 
+SDL_Texture* pauseButton;
+SDL_Texture* pausing;
+SDL_Texture* continueButton;
+SDL_Texture* exitButton;
+
+SDL_Texture* levelPreview = nullptr;
+
 
 SDL_Texture* dizzy1 = nullptr;
 SDL_Texture* dizzy2 = nullptr;
@@ -84,6 +101,12 @@ void loadTextures(SDL_Renderer* renderer) {
     backButton = loadTexture("back.png", renderer);
     closeButton = loadTexture("close.png", renderer);
 
+    pauseButton = loadTexture("pause.png", renderer);
+    pausing = loadTexture("pausing.png", renderer);
+    continueButton = loadTexture("continue.png", renderer);
+    exitButton = loadTexture("exit.png", renderer);
+
+    levelPreview = loadTexture("levelPreview.png", renderer);
 
     dizzy1 = loadTexture("dizzy1.png", renderer);
     dizzy2 = loadTexture("dizzy2.png", renderer);

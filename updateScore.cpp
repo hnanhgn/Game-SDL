@@ -4,12 +4,19 @@
 
 #include "definition.h"
 
-void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plantedFlowers, int beeCount, int lives, Uint32 levelStartTime, int seeds)
+void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plantedFlowers, int beeCount, int lives, Uint32 levelStartTime, int seeds, bool isPaused, Uint32 pausedTime)
 {
     SDL_Color white = {255, 255, 255, 255};
     char textBuffer[100];
     Uint32 currentTime = SDL_GetTicks();
-    float elapsedTime = (currentTime - levelStartTime) / 1000.0f;
+    float elapsedTime;
+
+    // Tính thời gian đã trôi qua
+    if (isPaused) {
+        elapsedTime = pausedTime / 1000.0f; // Dừng thời gian tại pausedTime
+    } else {
+        elapsedTime = (currentTime - levelStartTime) / 1000.0f; // Thời gian bình thường
+    }
 
     float timeLimit = 0.0f;
     int flowerGoal = 0;
@@ -53,14 +60,14 @@ void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plante
     SDL_Rect flowerRect = {880, 145, flowerSurface->w, flowerSurface->h};
     SDL_RenderCopy(renderer, flowerTexture, nullptr, &flowerRect);
 
-    sprintf(textBuffer,"%d" , seeds);
+    sprintf(textBuffer, "%d", seeds);
     SDL_Surface* seedSurface = TTF_RenderText_Solid(font, textBuffer, white);
     SDL_Texture* seedTexture = SDL_CreateTextureFromSurface(renderer, seedSurface);
     SDL_Rect seedRect = {890, 240, seedSurface->w, seedSurface->h};
     SDL_RenderCopy(renderer, seedTexture, nullptr, &seedRect);
 
-}
 
+}
 
 bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 levelStartTime, int& lives, bool& gameWon, bool& gameLost) {
     Uint32 currentTime = SDL_GetTicks();
@@ -104,3 +111,4 @@ bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 leve
 
     return (gameWon || gameLost); // Trả về true khi level kết thúc
 }
+

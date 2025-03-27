@@ -11,6 +11,7 @@
 #include "flowerGrowth.h"
 #include "updateScore.h"
 #include "beeOperation.h"
+#include "button.h"
 
 using namespace std;
 
@@ -78,9 +79,12 @@ int main(int argc, char* argv[])
     bool gameWon = false;
     bool gameLost = false;
     bool showDirection = false;
+    bool showLevelPreview = false;
+    bool isPaused = false;
     Uint32 levelStartTime = 0;
     Uint32 dizzyStartTime = 0;
     Uint32 currentTime = 0;
+    Uint32 pausedTime = 0;
     SDL_Event event;
 
     while (running) {
@@ -90,59 +94,27 @@ int main(int argc, char* argv[])
             if (event.type == SDL_QUIT)
                 running = false;
 
-            // Xử lý sự kiện trong welcome screen
             if (showWelcomeScreen) {
-                if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    int mouseX = event.button.x;
-                    int mouseY = event.button.y;
-                    SDL_Point mousePoint = {mouseX, mouseY};
-
-                    if (SDL_PointInRect(&mousePoint, &playButton)) {
-                        showWelcomeScreen = false;
-                        showLoadingScreen = true;
-                    }
-                    if (!showDirection && SDL_PointInRect(&mousePoint, &directionButton)) {
-                        showDirection = true;
-                        currentPage = 1;
-                    }
-                    if (showDirection) {
-                        if (SDL_PointInRect(&mousePoint, &nextRect) && currentPage == 1) currentPage = 2;
-                        if (SDL_PointInRect(&mousePoint, &backRect) && currentPage == 2) currentPage = 1;
-                        if (SDL_PointInRect(&mousePoint, &closeRect)) showDirection = false;
-                    }
-                }
+                handleWelcomeScreenEvents(event, showWelcomeScreen, showLoadingScreen, showDirection, currentPage);
             }
 
-            // Xử lý sự kiện trong game
-            if (!showWelcomeScreen && loaded) {
-                if (event.type == SDL_KEYDOWN && !showDirection) {
-                    if (event.key.keysym.sym == SDLK_SPACE)
-                        dropSeed(playerRect, seeds, plantedFlower);
-                    if (event.key.keysym.sym == SDLK_RETURN)
-                        pickFlower(playerRect, seeds, plantedFlower);
-                    if (event.key.keysym.sym == SDLK_LEFT)
-                        facingLeft = true;
-                    if (event.key.keysym.sym == SDLK_RIGHT)
-                        facingLeft = false;
+            if (showLevelPreview) {
+                chooseLevel(renderer, levelPreview, showLevelPreview, level,
+                            level1Button, level2Button, level3Button, level4Button,
+                            event, loaded, levelStartTime, lives, seeds, plantedFlower,
+                            beeCount, bees, plants);
+            }
+
+            if (!showWelcomeScreen && loaded && !showLevelPreview) {
+                handleGameEvents(event, showDirection, currentPage, facingLeft, playerRect, seeds, plantedFlower, isPaused, running);
+
+                // Cập nhật thời gian tạm dừng
+                if (isPaused && pausedTime == 0) {
+                    pausedTime = currentTime - levelStartTime; // Lưu thời gian đã trôi qua
                 }
-
-                if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    int mouseX = event.button.x;
-                    int mouseY = event.button.y;
-                    SDL_Point mousePoint = {mouseX, mouseY};
-
-                    if (!showDirection && SDL_PointInRect(&mousePoint, &directionButton)) {
-                        showDirection = true;
-                        currentPage = 1;
-                    }
-                    if (showDirection) {
-                        if (SDL_PointInRect(&mousePoint, &nextRect) && currentPage == 1) currentPage = 2;
-                        if (SDL_PointInRect(&mousePoint, &backRect) && currentPage == 2) currentPage = 1;
-                        if (SDL_PointInRect(&mousePoint, &closeRect)) {
-                            showDirection = false;
-                            currentPage = 1;
-                        }
-                    }
+                else if (!isPaused && pausedTime != 0) {
+                    levelStartTime = currentTime - pausedTime; // Khôi phục thời gian bắt đầu
+                    pausedTime = 0;
                 }
             }
         }
@@ -156,17 +128,27 @@ int main(int argc, char* argv[])
             }
             SDL_RenderPresent(renderer);
         }
-        else if (showLoadingScreen && !loaded && !showWelcomeScreen) {
+        else if (showLoadingScreen && !loaded && !showLevelPreview) {
             drawLoadingScreen(renderer, beforeGame);
-            loaded = true;
-            levelStartTime = SDL_GetTicks();
+            showLoadingScreen = false;
+            showLevelPreview = true;
             SDL_RenderPresent(renderer);
         }
-        else if (!showWelcomeScreen && loaded) {
-            if (!showDirection) {
+        else if (showLevelPreview) {
+            SDL_RenderCopy(renderer, levelPreview, nullptr, nullptr);
+            SDL_RenderPresent(renderer);
+        }
+        else if (!showWelcomeScreen && loaded && !showLevelPreview) {
+            if (levelStartTime == 0) {
+                levelStartTime = SDL_GetTicks();
+            }
+
+            if (!showDirection && !isPaused) { // Chỉ cập nhật khi không tạm dừng
                 updateMovement(playerRect);
                 bool contactNow = checkContactWithBee(playerRect, bees);
-                handleCollisionWithBee(lives, inContactWithBee, dizzyStartTime);
+                if (contactNow) { // Chỉ xử lý va chạm khi không tạm dừng
+                    handleCollisionWithBee(lives, inContactWithBee, dizzyStartTime);
+                }
                 updateFlowerGrowth(plants);
                 moveBee(bees, plants);
 
@@ -186,11 +168,16 @@ int main(int argc, char* argv[])
             drawBees(renderer, bee);
             drawPlants(renderer, flowerGrowthStep);
             drawCharacter(renderer, character1, character2, character3, dizzy1, dizzy2, facingLeft, inContactWithBee, dizzyStartTime);
-            drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime, seeds);
+            // Truyền thêm isPaused và pausedTime vào drawLevelInfo
+            drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime, seeds, isPaused, pausedTime);
 
-            // Vẽ nút Direction trong game
-            //SDL_RenderCopy(renderer, directionIcon, nullptr, &directionButton);
+            SDL_RenderCopy(renderer, pauseButton, nullptr, &pauseRect);
 
+            if (isPaused) {
+                SDL_RenderCopy(renderer, pausing, nullptr, &pausingRect);
+                SDL_RenderCopy(renderer, continueButton, nullptr, &continueRect);
+                SDL_RenderCopy(renderer, exitButton, nullptr, &exitRect);
+            }
             if (showDirection) {
                 drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
             }
@@ -203,7 +190,6 @@ int main(int argc, char* argv[])
             }
 
             SDL_RenderPresent(renderer);
-            SDL_Delay(16);
         }
     }
 

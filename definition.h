@@ -27,10 +27,19 @@ extern SDL_Renderer* renderer;
 extern SDL_Rect playButton;
 extern SDL_Rect directionButton;
 
-//extern SDL_Rect directionRect; // Nút Direction
-extern SDL_Rect nextRect;      // Nút Next
-extern SDL_Rect backRect;      // Nút Back
-extern SDL_Rect closeRect;      // Nút Close
+extern SDL_Rect nextRect;
+extern SDL_Rect backRect;
+extern SDL_Rect closeRect;
+
+extern SDL_Rect level1Button ;
+extern SDL_Rect level2Button ;
+extern SDL_Rect level3Button ;
+extern SDL_Rect level4Button ;
+
+extern SDL_Rect pauseRect ;
+extern SDL_Rect pausingRect;
+extern SDL_Rect continueRect ;
+extern SDL_Rect exitRect ;
 
 const float MIN_DISTANCE_TO_FLOWER = 200.0f;
 const float WAVE_AMPLITUDE = 1.0f;
@@ -87,6 +96,13 @@ extern SDL_Texture* direction2;
 extern SDL_Texture* nextButton;
 extern SDL_Texture* backButton;
 extern SDL_Texture* closeButton;
+
+extern SDL_Texture* pauseButton;
+extern SDL_Texture* pausing;
+extern SDL_Texture* continueButton;
+extern SDL_Texture* exitButton;
+
+extern SDL_Texture* levelPreview;
 
 extern SDL_Texture* dizzy1;
 extern SDL_Texture* dizzy2;

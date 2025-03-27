@@ -87,16 +87,20 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 }
 
 void addBees(int level) {
-    if ((level == 2 && bees.size() == 0) ||
-        (level == 3 && bees.size() == 1) ||
-        (level == 4 && bees.size() == 2) ) {
+    int minBeeCount = 0;
+    switch (level) {
+        case 1: minBeeCount = 0; break;
+        case 2: minBeeCount = 1; break;
+        case 3: minBeeCount = 2; break;
+        case 4: minBeeCount = 3; break;
+    }
+
+    if (bees.size() < minBeeCount) {
         Bee newBee;
         newBee.rect = {rand() % 800, rand() % 600, BEE_WIDTH, BEE_HEIGHT};
         newBee.moveTime = SDL_GetTicks();
-
         newBee.velocityX = (rand() % (2 * BEE_SPEED)) - BEE_SPEED;
         newBee.velocityY = (rand() % (2 * BEE_SPEED)) - BEE_SPEED;
-
         bees.push_back(newBee);
     }
 }

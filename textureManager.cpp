@@ -148,3 +148,4 @@ void drawDirection(SDL_Renderer* renderer, bool& showDirection, int& currentPage
     // Vẽ nút Close
     SDL_RenderCopy(renderer, closeButton, nullptr, &closeRect);
 }
+

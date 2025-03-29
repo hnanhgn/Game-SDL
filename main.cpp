@@ -139,8 +139,8 @@ int main(int argc, char* argv[])
                     pausedTimeSet = true;
                     wasPaused = true;
                 }
-                else if (!isPaused && wasPaused) { // wasPaused là biến kiểm tra trạng thái trước đó
-                    levelStartTime = currentTime - pausedTime; // Điều chỉnh để tiếp tục từ mốc cũ
+                else if (!isPaused && wasPaused) {
+                    levelStartTime = currentTime - pausedTime;
                     wasPaused = false;
                     pausedTimeSet = false;
                 }
@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
                 wasPaused = false;
                 pausedTimeSet = false;
             }
-            if (!showDirection && !isPaused && !showPassScreen && !showGameOverScreen) { // Chỉ cập nhật khi không tạm dừng, không pass, không thua
+            if (!showDirection && !isPaused && !showPassScreen && !showGameOverScreen) {
                 updateMovement(playerRect);
                 bool contactNow = checkContactWithBee(playerRect, bees);
                 if (contactNow) {
@@ -190,19 +190,21 @@ int main(int argc, char* argv[])
                     if (gameWon) {
                         showPassScreen = true;
                         dizzyStartTime = 0;
-                        isPaused = true; // Tạm dừng khi thắng
+                        isPaused = true;
                         gameWon = false;
                         levelStartTime = SDL_GetTicks();
                     }
                     if (gameLost) {
+                        Mix_PlayChannel(-1, crySound, 0);
                         showGameOverScreen = true;
                         dizzyStartTime = 0;
                         gameLost = false;
-                        isPaused = true; // Tạm dừng khi thua
+                        isPaused = true;
                         levelStartTime = SDL_GetTicks();
                     }
                 }
             }
+
             SDL_RenderCopy(renderer, background, nullptr, nullptr);
             addBees(level);
             drawBees(renderer, bee);
@@ -210,19 +212,17 @@ int main(int argc, char* argv[])
             drawCharacter(renderer, character1, character2, character3, dizzy1, dizzy2, facingLeft, inContactWithBee, dizzyStartTime);
             drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime, seeds, isPaused, pausedTime, state);
 
-            if (!state && isPaused) {
-                drawPauseNoti ( renderer);
-            }
-            if (showDirection) {
-                drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
-            }
-            if (showPassScreen) {
+            if (!state && isPaused)
+                drawPauseNoti (renderer);
 
+            if (showDirection)
+                drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
+
+            if (showPassScreen)
                 drawPassedNoti (renderer);
-            }
-            if (showGameOverScreen) {
+
+            if (showGameOverScreen)
                 drawGameOverNoti (renderer);
-            }
 
             SDL_RenderCopy(renderer, pauseButton, nullptr, &pauseRect);
 

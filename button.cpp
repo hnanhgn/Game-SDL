@@ -33,30 +33,6 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
                  int& beeCount, std::vector<Bee>& bees, std::vector<Plant>& plants, TTF_Font* font, bool& isPaused, bool& wasPaused, bool& pausedTimeSet, Uint32& PausedTime) {
     SDL_RenderCopy(renderer, levelPreviewTexture, nullptr, nullptr);
 
-    /*SDL_Rect starRect = {0, 0, 40, 40};
-    if (completedLevel[0]) {
-        starRect.x = level1Button.x + level1Button.w - 40;
-        starRect.y = level1Button.y;
-        SDL_RenderCopy(renderer, star, nullptr, &starRect);
-    }
-    if (completedLevel[1]) {
-        starRect.x = level2Button.x + level2Button.w - 40;
-        starRect.y = level2Button.y;
-        SDL_RenderCopy(renderer, star, nullptr, &starRect);
-    }
-    if (completedLevel[2]) {
-        starRect.x = level3Button.x + level3Button.w - 40;
-        starRect.y = level3Button.y;
-        SDL_RenderCopy(renderer, star, nullptr, &starRect);
-    }
-    if (completedLevel[3]) {
-        starRect.x = level4Button.x + level4Button.w - 40;
-        starRect.y = level4Button.y;
-        SDL_RenderCopy(renderer, star, nullptr, &starRect);
-    }*/
-
-
-
     if (event.type == SDL_MOUSEBUTTONDOWN) {
         int mouseX = event.button.x;
         int mouseY = event.button.y;
@@ -73,10 +49,10 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             showLevelPreview = false;
             loaded = true;
             levelStartTime = 0;
-            isPaused = false;   // Reset trạng thái pause
-            wasPaused = false;  // Reset biến theo dõi trạng thái pause trước đó
-            pausedTimeSet = false; // Reset biến đánh dấu đã thiết lập thời gian pause
-            PausedTime = 0;     // Reset thời gian tạm dừng
+            isPaused = false;
+            wasPaused = false;
+            pausedTimeSet = false;
+            PausedTime = 0;
         }
         else if (SDL_PointInRect(&mousePoint, &level2Button)) {
             level = 2;
@@ -97,10 +73,10 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             showLevelPreview = false;
             loaded = true;
             levelStartTime = 0;
-            isPaused = false;   // Reset trạng thái pause
-            wasPaused = false;  // Reset biến theo dõi trạng thái pause trước đó
-            pausedTimeSet = false; // Reset biến đánh dấu đã thiết lập thời gian pause
-            PausedTime = 0;     // Reset thời gian tạm dừng
+            isPaused = false;
+            wasPaused = false;
+            pausedTimeSet = false;
+            PausedTime = 0;
         }
         else if (SDL_PointInRect(&mousePoint, &level3Button)) {
             level = 3;
@@ -121,10 +97,10 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             showLevelPreview = false;
             loaded = true;
             levelStartTime = 0;
-            isPaused = false;   // Reset trạng thái pause
-            wasPaused = false;  // Reset biến theo dõi trạng thái pause trước đó
-            pausedTimeSet = false; // Reset biến đánh dấu đã thiết lập thời gian pause
-            PausedTime = 0;     // Reset thời gian tạm dừng
+            isPaused = false;
+            wasPaused = false;
+            pausedTimeSet = false;
+            PausedTime = 0;
         }
         else if (SDL_PointInRect(&mousePoint, &level4Button)) {
             level = 4;
@@ -145,10 +121,10 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             showLevelPreview = false;
             loaded = true;
             levelStartTime = 0;
-            isPaused = false;   // Reset trạng thái pause
-            wasPaused = false;  // Reset biến theo dõi trạng thái pause trước đó
-            pausedTimeSet = false; // Reset biến đánh dấu đã thiết lập thời gian pause
-            PausedTime = 0;     // Reset thời gian tạm dừng
+            isPaused = false;
+            wasPaused = false;
+            pausedTimeSet = false;
+            PausedTime = 0;
         }
     }
 }
@@ -199,26 +175,25 @@ void handleGameEvents(SDL_Event& event, bool& showDirection, int& currentPage, b
         }
         else if (showPassScreen) {
             if (SDL_PointInRect(&mousePoint, &menuRect)) {
-                // Chuyển sang màn hình chọn level
+
                 showPassScreen = false;
                 showLevelPreview = true;
                 loaded = false;
-                isPaused = false; // Đặt lại trạng thái pause
+                isPaused = false;
                 completedLevel[level - 1] = true;
-                //lastSeeds = seeds;
+
                 if (level < 4) {
                     level++;
                 }
             }
             else if (SDL_PointInRect(&mousePoint, &playAgainRect)) {
-                // Chơi lại level hiện tại
+
                 showPassScreen = false;
                 loaded = true;
-                isPaused = false; // Đặt lại trạng thái pause
-                levelStartTime = 0; // Reset thời gian về giá trị hiện tại
+                isPaused = false;
+                levelStartTime = 0;
                 completedLevel[level - 1] = true;
-                //lastSeeds = seeds;
-                // Reset các giá trị của level
+
                 switch (level) {
                     case 1: lives = 4; seeds = 10; break;
                     case 2: lives = 4; seeds = 10; break;
@@ -231,18 +206,17 @@ void handleGameEvents(SDL_Event& event, bool& showDirection, int& currentPage, b
             }
             else if (SDL_PointInRect(&mousePoint, &passExitRect)) {
                 completedLevel[level - 1] = true;
-                //lastSeeds = seeds;
                 running = false;
             }
         }
         else if (showGameOverScreen) {
             if (SDL_PointInRect(&mousePoint, &gameOverPlayAgainRect)) {
-                // Chơi lại level hiện tại
+
                 showGameOverScreen = false;
                 loaded = true;
                 isPaused = false;
                 levelStartTime = 0;
-                // Reset các giá trị của level
+
                 switch (level) {
                     case 1: lives = 4; seeds = 10; break;
                     case 2: lives = 4; seeds = 10; break;

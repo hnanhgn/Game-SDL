@@ -49,7 +49,6 @@ void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
         plants.push_back(newPlant);
 
         seeds -= 2;
-        //plantedFlowers += 1;
     }
 }
 
@@ -90,13 +89,13 @@ bool checkContactWithBee (SDL_Rect& characterRect, vector<Bee>& bees) {
 
 void handleCollisionWithBee(int& lives, bool& inContactWithBee, Uint32& dizzyStartTime) {
     Uint32 currentTime = SDL_GetTicks();
-    const Uint32 COOLDOWN_TIME = 1000; // 1 giây miễn nhiễm sau va chạm
+    const Uint32 COOLDOWN_TIME = 1000;
 
 
     if (!inContactWithBee || (currentTime - dizzyStartTime >= COOLDOWN_TIME)) {
         lives--;
         inContactWithBee = true;
-        dizzyStartTime = currentTime; // Đặt lại thời gian bắt đầu chóng mặt
+        dizzyStartTime = currentTime;
     }
 }
 

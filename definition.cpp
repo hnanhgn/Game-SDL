@@ -52,10 +52,8 @@ int level = 1;
 int beeCount = 0;
 int currentPage = 1;
 int levelStartTime = 0;
-int lastPlantedFlower = 0; // Lưu plantedFlower cuối cùng
-int lastSeeds = 0;         // Lưu seeds cuối cùng
 
-bool completedLevel[4] = {false, false, false, false}; // Mảng lưu trạng thái pass của 4 level
+bool completedLevel[4] = {false, false, false, false};
 
 vector<SDL_Rect> hearts;
 

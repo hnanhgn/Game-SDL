@@ -67,10 +67,8 @@ extern int beeCount;
 extern int lives;
 extern int currentPage;
 extern int levelStartTime;
-extern int lastPlantedFlower ; // Lưu plantedFlower cuối cùng
-extern int lastSeeds ;         // Lưu seeds cuối cùng
 
-extern bool completedLevel[4]; // Mảng lưu trạng thái pass của 4 level
+extern bool completedLevel[4];
 
 enum PlantStage { SEED, SPROUT, BUD, BLOOM, WILT };
 

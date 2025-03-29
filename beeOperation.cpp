@@ -41,9 +41,9 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.y += sin(angle) * 0.5f;
             }
 
-            if (targetFlower && targetFlower->stage == WILT) { // Chỉ hút khi hoa ở trạng thái WILT
+            if (targetFlower && targetFlower->stage == WILT) {
                 if (bee.collectTime == 0)
-                    bee.collectTime = currentTime; // Bắt đầu đếm thời gian hút mật
+                    bee.collectTime = currentTime;
 
                 if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
 

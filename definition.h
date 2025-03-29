@@ -3,6 +3,8 @@
 
 #include <string>
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <vector>
 
 using namespace std;
@@ -41,6 +43,17 @@ extern SDL_Rect pausingRect;
 extern SDL_Rect continueRect ;
 extern SDL_Rect exitRect ;
 
+extern SDL_Rect passLevelRect;
+extern SDL_Rect menuRect;
+extern SDL_Rect playAgainRect;
+extern SDL_Rect passExitRect;
+
+extern SDL_Rect gameOverRect;
+extern SDL_Rect gameOverPlayAgainRect;
+extern SDL_Rect gameOverExitRect;
+
+extern SDL_Rect winRect;
+
 const float MIN_DISTANCE_TO_FLOWER = 200.0f;
 const float WAVE_AMPLITUDE = 1.0f;
 const float WAVE_FREQUENCY = 0.02f;
@@ -53,6 +66,11 @@ extern int level;
 extern int beeCount;
 extern int lives;
 extern int currentPage;
+extern int levelStartTime;
+extern int lastPlantedFlower ; // Lưu plantedFlower cuối cùng
+extern int lastSeeds ;         // Lưu seeds cuối cùng
+
+extern bool completedLevel[4]; // Mảng lưu trạng thái pass của 4 level
 
 enum PlantStage { SEED, SPROUT, BUD, BLOOM, WILT };
 
@@ -102,12 +120,22 @@ extern SDL_Texture* pausing;
 extern SDL_Texture* continueButton;
 extern SDL_Texture* exitButton;
 
+extern SDL_Texture* passLevel;
+extern SDL_Texture* menuButton;
+extern SDL_Texture* playAgainButton;
+extern SDL_Texture* passExitButton;
+
 extern SDL_Texture* levelPreview;
+
+extern SDL_Texture* star;
 
 extern SDL_Texture* dizzy1;
 extern SDL_Texture* dizzy2;
 
 extern SDL_Texture* gameOver;
+
+extern SDL_Texture* win;
 void loadTextures(SDL_Renderer* renderer);
+
 
 #endif // DEFINITION_H_INCLUDED

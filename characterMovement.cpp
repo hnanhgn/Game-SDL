@@ -48,8 +48,8 @@ void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
         newPlant.plantedTime = SDL_GetTicks();
         plants.push_back(newPlant);
 
-        seeds -= 2;          // Trừ 2 hạt giống
-        //plantedFlowers += 1; // Tăng số hoa đã gieo
+        seeds -= 2;
+        //plantedFlowers += 1;
     }
 }
 
@@ -88,16 +88,15 @@ bool checkContactWithBee (SDL_Rect& characterRect, vector<Bee>& bees) {
     return false;
 }
 
-void handleCollisionWithBee(int& lives, bool& inContactWithBee, Uint32& dizzyStartTime)
-{
-    bool contactNow = checkContactWithBee(playerRect, bees); // Kiểm tra va chạm
+void handleCollisionWithBee(int& lives, bool& inContactWithBee, Uint32& dizzyStartTime) {
+    Uint32 currentTime = SDL_GetTicks();
+    const Uint32 COOLDOWN_TIME = 1000; // 1 giây miễn nhiễm sau va chạm
 
-    if (contactNow && !inContactWithBee) { // Chỉ trừ mạng khi vừa mới chạm ong
-        lives--; // Giảm mạng
-        inContactWithBee = true; // Đánh dấu đang chạm ong
-        dizzyStartTime = SDL_GetTicks(); // Bắt đầu thời gian "choáng"
-    }
-    else if (!contactNow && inContactWithBee) { // Khi không còn chạm ong nữa
-        inContactWithBee = false; // Đặt lại trạng thái
+
+    if (!inContactWithBee || (currentTime - dizzyStartTime >= COOLDOWN_TIME)) {
+        lives--;
+        inContactWithBee = true;
+        dizzyStartTime = currentTime; // Đặt lại thời gian bắt đầu chóng mặt
     }
 }
+

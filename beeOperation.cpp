@@ -46,9 +46,9 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                     bee.collectTime = currentTime; // Bắt đầu đếm thời gian hút mật
 
                 if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
-                    // Xóa hoa khi đã hút mật đủ 4 giây
+
                     plants.erase( std::remove_if(plants.begin(), plants.end(),[&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); }),plants.end() );
-                    bee.collectTime = 0; // Reset thời gian hút mật
+                    bee.collectTime = 0;
                 }
             }
         }

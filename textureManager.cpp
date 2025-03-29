@@ -149,3 +149,51 @@ void drawDirection(SDL_Renderer* renderer, bool& showDirection, int& currentPage
     SDL_RenderCopy(renderer, closeButton, nullptr, &closeRect);
 }
 
+void drawPassedNoti (SDL_Renderer* renderer)
+{
+    SDL_RenderCopy(renderer, passLevel, nullptr, &passLevelRect);
+    SDL_RenderCopy(renderer, menuButton, nullptr, &menuRect);
+    SDL_RenderCopy(renderer, playAgainButton, nullptr, &playAgainRect);
+    SDL_RenderCopy(renderer, passExitButton, nullptr, &passExitRect);
+}
+
+void drawGameOverNoti (SDL_Renderer* renderer)
+{
+    SDL_RenderCopy(renderer, gameOver, nullptr, &gameOverRect);
+    SDL_RenderCopy(renderer, playAgainButton, nullptr, &gameOverPlayAgainRect);
+    SDL_RenderCopy(renderer, passExitButton, nullptr, &gameOverExitRect);
+}
+
+void drawPauseNoti (SDL_Renderer* renderer)
+{
+    SDL_RenderCopy(renderer, pausing, nullptr, &pausingRect);
+    SDL_RenderCopy(renderer, continueButton, nullptr, &continueRect);
+    SDL_RenderCopy(renderer, exitButton, nullptr, &exitRect);
+}
+
+void drawStar (SDL_Renderer* renderer, bool completedLevel[4])
+{
+
+    SDL_Rect starRect = {0, 0, 60, 60};
+    if (completedLevel[0]) {
+       starRect.x = level1Button.x + level1Button.w - 170;
+        starRect.y = level1Button.y - 20;
+        SDL_RenderCopy(renderer, star, nullptr, &starRect);
+    }
+    if (completedLevel[1]) {
+        starRect.x = level2Button.x + level2Button.w - 15;
+        starRect.y = level2Button.y + 110;
+        SDL_RenderCopy(renderer, star, nullptr, &starRect);
+    }
+    if (completedLevel[2]) {
+        starRect.x = level3Button.x +level3Button.w - 50;
+        starRect.y = level3Button.y - 20;
+        SDL_RenderCopy(renderer, star, nullptr, &starRect);
+    }
+    if (completedLevel[3]) {
+        starRect.x = level4Button.x + level4Button.w + 5;
+        starRect.y = level4Button.y + 70;
+        SDL_RenderCopy(renderer, star, nullptr, &starRect);
+    }
+
+}

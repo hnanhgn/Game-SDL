@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
     Mix_Music* backgroundMusic = Mix_LoadMUS("sounds/music.mp3");
     Mix_Chunk* clickSound = Mix_LoadWAV("sounds/click.wav");
     Mix_Chunk* crySound = Mix_LoadWAV("sounds/cry.wav");
+    Mix_Chunk* happySound = Mix_LoadWAV("sounds/happy.wav");
 
 
 
@@ -165,8 +166,10 @@ int main(int argc, char* argv[])
         else if (showLevelPreview) {
             SDL_RenderCopy(renderer, levelPreview, nullptr, nullptr);
             drawStar (renderer, completedLevel);
-            if( completedLevel[0] && completedLevel[1] && completedLevel[2] && completedLevel[3])
+            if( completedLevel[0] && completedLevel[1] && completedLevel[2] && completedLevel[3]){
+                Mix_PlayChannel(-1, happySound, 0);
                 SDL_RenderCopy(renderer, win, nullptr, &winRect);
+            }
             SDL_RenderPresent(renderer);
         }
         else if (!showWelcomeScreen && loaded && !showLevelPreview) {
@@ -188,6 +191,7 @@ int main(int argc, char* argv[])
 
                 if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost, state)) {
                     if (gameWon) {
+                        Mix_PlayChannel(-1, happySound, 0);
                         showPassScreen = true;
                         dizzyStartTime = 0;
                         isPaused = true;

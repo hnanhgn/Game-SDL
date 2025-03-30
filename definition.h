@@ -13,14 +13,12 @@ const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 700;
 const string WINDOW_TITLE = "Loobee";
 
-const int CHARACTER_WIDTH = 150;
-const int CHARACTER_HEIGHT = 130;
+const int CHARACTER_WIDTH = 65;
+const int CHARACTER_HEIGHT = 73;
 const int CHARACTER_SPEED = 10;
 
-const int GRID_SIZE = 30;
-
-const int BEE_WIDTH = 60;
-const int BEE_HEIGHT = 50;
+const int BEE_WIDTH = 40;
+const int BEE_HEIGHT = 40;
 const int BEE_SPEED = 3;
 
 extern SDL_Rect playerRect ;

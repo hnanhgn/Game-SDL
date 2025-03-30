@@ -52,7 +52,7 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 if (bee.collectTime == 0)
                     bee.collectTime = currentTime;
 
-                if (bee.collectTime != 0 && currentTime - bee.collectTime >= 4000) {
+                if (bee.collectTime != 0 && currentTime - bee.collectTime >= 3000) {
 
                     plants.erase( std::remove_if(plants.begin(), plants.end(),[&](const Plant& p) { return SDL_RectEquals(&p.rect, &nearestFlower); }),plants.end() );
                     bee.collectTime = 0;

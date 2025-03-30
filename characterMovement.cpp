@@ -29,11 +29,11 @@ void updateMovement (SDL_Rect& playerRect)
     if (playerRect.x > 750)
         playerRect.x = 750;
 
-    if (playerRect.y < 120)
-        playerRect.y = 120;
+    if (playerRect.y < 170)
+        playerRect.y = 170;
 
-    if (playerRect.y > 500)
-        playerRect.y = 500;
+    if (playerRect.y > 550)
+        playerRect.y = 550;
 
 }
 
@@ -43,7 +43,7 @@ void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
     if (seeds >= 2) {
 
         Plant newPlant;
-        newPlant.rect = {playerRect.x + 70, playerRect.y + 70, 20, 20};
+        newPlant.rect = {playerRect.x + 30, playerRect.y + 30, 20, 20};
         newPlant.stage = SEED;
         newPlant.plantedTime = SDL_GetTicks();
         plants.push_back(newPlant);
@@ -56,8 +56,8 @@ void pickFlower(SDL_Rect& playerRect, int& seeds, int& plantedFlower) {
     for (auto it = plants.begin(); it != plants.end(); ++it) {
         if (it->stage == WILT) {
             SDL_Rect flowerRect = it->rect;
-            flowerRect.w = 40;
-            flowerRect.h = 40;
+            flowerRect.w = 30;
+            flowerRect.h = 30;
             flowerRect.x = it->rect.x - 10;
             flowerRect.y = it->rect.y - 10;
 

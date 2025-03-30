@@ -26,5 +26,6 @@ void drawPassedNoti (SDL_Renderer* renderer);
 void drawGameOverNoti (SDL_Renderer* renderer);
 void drawPauseNoti (SDL_Renderer* renderer);
 void drawStar (SDL_Renderer* renderer, bool completedLevel[4]);
+void drawSoundButton(SDL_Renderer* renderer, bool& isSoundOn) ;
 
 #endif // TEXTUREMANAGER_H_INCLUDED

@@ -27,18 +27,25 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 
         }
         if (minDistance < MIN_DISTANCE_TO_FLOWER) {
-            float deltaX = nearestFlower.x - bee.rect.x;
-            float deltaY = nearestFlower.y - bee.rect.y;
+            float targetX = nearestFlower.x + (nearestFlower.w - bee.rect.w) / 2.0f;
+            float targetY = nearestFlower.y - bee.rect.h + 15.0f;
+
+            float deltaX = targetX - bee.rect.x;
+            float deltaY = targetY - bee.rect.y;
 
             float angle = atan2(deltaY, deltaX);
 
             if (minDistance > 10.0f) {
-                bee.rect.x += cos(angle) * BEE_SPEED + sin(currentTime * WAVE_FREQUENCY) * WAVE_AMPLITUDE;
-                bee.rect.y += sin(angle) * BEE_SPEED + cos(currentTime * WAVE_FREQUENCY) * WAVE_AMPLITUDE;
+                float waveX = (minDistance > 50.0f) ? sin(currentTime * WAVE_FREQUENCY) * WAVE_AMPLITUDE : 0.0f;
+                float waveY = (minDistance > 50.0f) ? cos(currentTime * WAVE_FREQUENCY) * WAVE_AMPLITUDE : 0.0f;
+                bee.rect.x += cos(angle) * BEE_SPEED + waveX;
+                bee.rect.y += sin(angle) * BEE_SPEED + waveY;
             }
             else {
-                bee.rect.x += cos(angle) * 0.5f;
-                bee.rect.y += sin(angle) * 0.5f;
+                bee.rect.x = targetX;
+                bee.rect.y = targetY;
+                bee.velocityX = 0;
+                bee.velocityY = 0;
             }
 
             if (targetFlower && targetFlower->stage == WILT) {
@@ -63,20 +70,20 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
             bee.rect.y += bee.velocityY;
         }
 
-        if (bee.rect.x < 0){
-            bee.rect.x = 0;
+        if (bee.rect.x < 100 ){
+            bee.rect.x = 100;
             bee.velocityX *= -1;
         }
-        if (bee.rect.x > 800 - bee.rect.w) {
-            bee.rect.x = 800 - bee.rect.w;
+        if (bee.rect.x > 900 - bee.rect.w) {
+            bee.rect.x = 900 - bee.rect.w;
             bee.velocityX *= -1;
         }
-        if (bee.rect.y < 0) {
-            bee.rect.y = 0;
+        if (bee.rect.y < 50) {
+            bee.rect.y = 50;
             bee.velocityY *= -1;
         }
-        if (bee.rect.y > 600 - bee.rect.h) {
-            bee.rect.y = 600 - bee.rect.h;
+        if (bee.rect.y > 650 - bee.rect.h) {
+            bee.rect.y = 650 - bee.rect.h;
             bee.velocityY *= -1;
         }
 
@@ -85,6 +92,7 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
     }
 
 }
+
 
 void addBees(int level) {
     int minBeeCount = 0;

@@ -21,7 +21,7 @@ const int GRID_SIZE = 30;
 
 const int BEE_WIDTH = 60;
 const int BEE_HEIGHT = 50;
-const int BEE_SPEED = 4;
+const int BEE_SPEED = 3;
 
 extern SDL_Rect playerRect ;
 extern SDL_Renderer* renderer;
@@ -54,11 +54,13 @@ extern SDL_Rect gameOverExitRect;
 
 extern SDL_Rect winRect;
 
+extern SDL_Rect soundButton;
+
 const float MIN_DISTANCE_TO_FLOWER = 200.0f;
 const float WAVE_AMPLITUDE = 1.0f;
 const float WAVE_FREQUENCY = 0.02f;
 const float COLLECTING_TIME = 3000;
-
+const float APPROACH_FACTOR = 0.1f;
 
 extern int plantedFlower;
 extern int seeds;
@@ -76,6 +78,7 @@ struct Plant {
     SDL_Rect rect;
     PlantStage stage;
     Uint32 plantedTime;
+    int id;
 };
 
 extern Uint32 currentTime ;
@@ -89,6 +92,9 @@ struct Bee {
     float velocityY;
 };
 extern vector<Bee> bees;
+
+
+
 
 SDL_Texture* loadTexture(const char* file, SDL_Renderer* renderer);
 
@@ -133,6 +139,10 @@ extern SDL_Texture* dizzy2;
 extern SDL_Texture* gameOver;
 
 extern SDL_Texture* win;
+
+extern SDL_Texture* soundOn;
+extern SDL_Texture* soundOff;
+
 void loadTextures(SDL_Renderer* renderer);
 
 

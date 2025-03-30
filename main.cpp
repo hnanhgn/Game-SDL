@@ -99,6 +99,7 @@ int main(int argc, char* argv[])
     bool state = false;
     bool wasPaused = false;
     bool pausedTimeSet;
+    bool isSoundOn = true;
     Uint32 levelStartTime = 0;
     Uint32 dizzyStartTime = 0;
     Uint32 currentTime = 0;
@@ -108,6 +109,7 @@ int main(int argc, char* argv[])
 
     Mix_PlayMusic(backgroundMusic, -1);
 
+    loadLevelProgress();
 
     while (running) {
         currentTime = SDL_GetTicks();
@@ -117,6 +119,7 @@ int main(int argc, char* argv[])
                 running = false;
 
             if (event.type == SDL_MOUSEBUTTONDOWN) {
+                handleSoundButtonClick(event, isSoundOn);
                 Mix_PlayChannel(-1, clickSound, 0);
             }
 
@@ -128,7 +131,6 @@ int main(int argc, char* argv[])
                             level1Button, level2Button, level3Button, level4Button,
                             event, loaded, levelStartTime, lives, seeds, plantedFlower,
                             beeCount, bees, plants, font, isPaused, wasPaused, pausedTimeSet, pausedTime);
-
 
             if (!showWelcomeScreen && loaded && !showLevelPreview) {
                 handleGameEvents(event, showDirection, currentPage, facingLeft, playerRect, seeds, plantedFlower,
@@ -152,24 +154,26 @@ int main(int argc, char* argv[])
 
         if (showWelcomeScreen) {
             drawWelcomeScreen(renderer, welcome, playIcon, directionIcon);
+            drawSoundButton(renderer, isSoundOn);
             if (showDirection)
                 drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
-
             SDL_RenderPresent(renderer);
         }
         else if (showLoadingScreen && !loaded && !showLevelPreview) {
             drawLoadingScreen(renderer, beforeGame);
             showLoadingScreen = false;
             showLevelPreview = true;
+            drawSoundButton(renderer, isSoundOn);
             SDL_RenderPresent(renderer);
         }
         else if (showLevelPreview) {
             SDL_RenderCopy(renderer, levelPreview, nullptr, nullptr);
-            drawStar (renderer, completedLevel);
-            if( completedLevel[0] && completedLevel[1] && completedLevel[2] && completedLevel[3]){
+            drawStar(renderer, completedLevel);
+            if (completedLevel[0] && completedLevel[1] && completedLevel[2] && completedLevel[3]) {
                 Mix_PlayChannel(-1, happySound, 0);
                 SDL_RenderCopy(renderer, win, nullptr, &winRect);
             }
+            drawSoundButton(renderer, isSoundOn);
             SDL_RenderPresent(renderer);
         }
         else if (!showWelcomeScreen && loaded && !showLevelPreview) {
@@ -217,19 +221,20 @@ int main(int argc, char* argv[])
             drawLevelInfo(renderer, font, level, plantedFlower, beeCount, lives, levelStartTime, seeds, isPaused, pausedTime, state);
 
             if (!state && isPaused)
-                drawPauseNoti (renderer);
+                drawPauseNoti(renderer);
 
             if (showDirection)
                 drawDirection(renderer, showDirection, currentPage, nextRect, backRect, closeRect);
 
             if (showPassScreen)
-                drawPassedNoti (renderer);
+                drawPassedNoti(renderer);
 
             if (showGameOverScreen)
-                drawGameOverNoti (renderer);
+                drawGameOverNoti(renderer);
 
             SDL_RenderCopy(renderer, pauseButton, nullptr, &pauseRect);
 
+            drawSoundButton(renderer, isSoundOn);
 
             SDL_RenderPresent(renderer);
         }

@@ -38,6 +38,8 @@ SDL_Rect gameOverRect = {SCREEN_WIDTH / 2 - 375, SCREEN_HEIGHT / 2 - 275, 750, 5
 SDL_Rect gameOverPlayAgainRect = {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 60, 130, 100};
 SDL_Rect gameOverExitRect = {SCREEN_WIDTH / 2 + 130, SCREEN_HEIGHT / 2 + 60, 130, 100};
 
+SDL_Rect soundButton = {900, 40, 50, 50};
+
 SDL_Rect winRect = {SCREEN_WIDTH / 2 - 450, SCREEN_HEIGHT / 2 - 300, 900, 600};
 
 Uint32 currentTime = SDL_GetTicks();
@@ -54,9 +56,6 @@ int currentPage = 1;
 int levelStartTime = 0;
 
 bool completedLevel[4] = {false, false, false, false};
-
-vector<SDL_Rect> hearts;
-
 
 SDL_Texture* background = nullptr;
 SDL_Texture* beforeGame = nullptr;
@@ -98,6 +97,9 @@ SDL_Texture* dizzy2 = nullptr;
 SDL_Texture* gameOver = nullptr;
 
 SDL_Texture* win = nullptr;
+
+SDL_Texture* soundOn;
+SDL_Texture* soundOff;
 
 
 void loadTextures(SDL_Renderer* renderer) {
@@ -142,5 +144,8 @@ void loadTextures(SDL_Renderer* renderer) {
     gameOver = loadTexture("pics/gameOver.png", renderer);
 
     win = loadTexture("pics/win.png", renderer);
+
+    soundOn = loadTexture("pics/soundOn.png", renderer);
+    soundOff = loadTexture("pics/soundOff.png", renderer);
 }
 

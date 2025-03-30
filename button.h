@@ -21,4 +21,6 @@ void handleGameEvents(SDL_Event& event, bool& showDirection, int& currentPage, b
                       bool& showPassScreen, bool& showLevelPreview, bool& loaded, int& level, int& lives,
                       bool& showGameOverScreen, bool state, Uint32& levelStartTime);
 
+void handleSoundButtonClick(SDL_Event& event, bool& isSoundOn);
+
 #endif // BUTTON_H_INCLUDED

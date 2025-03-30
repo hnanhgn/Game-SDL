@@ -1,8 +1,29 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
+#include <fstream>
 
 #include "definition.h"
+
+void saveLevelProgress() {
+    std::ofstream file("level_progress.dat", std::ios::binary);
+    if (file.is_open()) {
+        file.write(reinterpret_cast<char*>(completedLevel), sizeof(completedLevel));
+        file.close();
+    }
+}
+
+void loadLevelProgress() {
+    std::ifstream file("level_progress.dat", std::ios::binary);
+    if (file.is_open()) {
+        file.read(reinterpret_cast<char*>(completedLevel), sizeof(completedLevel));
+        file.close();
+    } else {
+
+        for (int i = 0; i < 4; i++) completedLevel[i] = false;
+    }
+}
+
 
 void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plantedFlowers, int beeCount, int lives, Uint32 levelStartTime, int seeds, bool isPaused, Uint32 pausedTime, bool state)
 {
@@ -21,9 +42,9 @@ void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plante
     int flowerGoal = 0;
     switch (level) {
         case 1: timeLimit = 40.0f; flowerGoal = 10; break;
-        case 2: timeLimit = 80.0f; flowerGoal = 15; break;
-        case 3: timeLimit = 120.0f; flowerGoal = 20; break;
-        case 4: timeLimit = 180.0f; flowerGoal = 30; break;
+        case 2: timeLimit = 70.0f; flowerGoal = 15; break;
+        case 3: timeLimit = 100.0f; flowerGoal = 20; break;
+        case 4: timeLimit = 150.0f; flowerGoal = 30; break;
     }
     float timeLeft = timeLimit - elapsedTime;
     if (timeLeft < 0) timeLeft = 0;
@@ -80,35 +101,39 @@ bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 leve
         if (elapsedTime <= 40.0f && plantedFlowers >= 10){
             gameWon = true;
             completedLevel[level - 1] = true;
+            saveLevelProgress();
         }
         if (elapsedTime > 40.0f && plantedFlowers < 10)
             gameLost = true;
         break;
     case 2:
         beeCount = 1;
-        if (elapsedTime <= 80.0f && plantedFlowers >= 15){
+        if (elapsedTime <= 70.0f && plantedFlowers >= 15){
             gameWon = true;
             completedLevel[level - 1] = true;
+            saveLevelProgress();
         }
-        if (elapsedTime > 80.0f && plantedFlowers < 15)
+        if (elapsedTime > 70.0f && plantedFlowers < 15)
             gameLost = true;
         break;
     case 3:
         beeCount = 2;
-        if (elapsedTime <= 120.0f && plantedFlowers >= 20){
+        if (elapsedTime <= 100.0f && plantedFlowers >= 20){
             gameWon = true;
             completedLevel[level - 1] = true;
+            saveLevelProgress();
         }
-        if (elapsedTime > 120.0f && plantedFlowers < 20)
+        if (elapsedTime > 100.0f && plantedFlowers < 20)
             gameLost = true;
         break;
     case 4:
         beeCount = 3;
-        if (elapsedTime <= 180.0f && plantedFlowers >= 30){
+        if (elapsedTime <= 150.0f && plantedFlowers >= 30){
             gameWon = true;
             completedLevel[level - 1] = true;
+            saveLevelProgress();
         }
-        if (elapsedTime > 180.0f && plantedFlowers < 30)
+        if (elapsedTime > 150.0f && plantedFlowers < 30)
             gameLost = true;
         break;
     }
@@ -120,6 +145,5 @@ bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 leve
     state = gameLost || gameWon;
     return (gameWon || gameLost); // Trả về true khi level kết thúc
 }
-
 
 

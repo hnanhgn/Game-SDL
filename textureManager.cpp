@@ -188,3 +188,8 @@ void drawStar (SDL_Renderer* renderer, bool completedLevel[4])
     }
 
 }
+
+void drawSoundButton(SDL_Renderer* renderer, bool& isSoundOn) {
+    SDL_Texture* currentTexture = isSoundOn ? soundOn : soundOff;
+    SDL_RenderCopy(renderer, currentTexture, nullptr, &soundButton);
+}

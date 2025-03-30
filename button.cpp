@@ -31,7 +31,7 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
                  SDL_Rect& level1Button, SDL_Rect& level2Button, SDL_Rect& level3Button, SDL_Rect& level4Button,
                  SDL_Event& event, bool& loaded, Uint32& levelStartTime, int& lives, int& seeds, int& plantedFlower,
                  int& beeCount, std::vector<Bee>& bees, std::vector<Plant>& plants, TTF_Font* font, bool& isPaused, bool& wasPaused, bool& pausedTimeSet, Uint32& PausedTime) {
-    SDL_RenderCopy(renderer, levelPreviewTexture, nullptr, nullptr);
+    //SDL_RenderCopy(renderer, levelPreviewTexture, nullptr, nullptr);
 
     if (event.type == SDL_MOUSEBUTTONDOWN) {
         int mouseX = event.button.x;
@@ -231,6 +231,27 @@ void handleGameEvents(SDL_Event& event, bool& showDirection, int& currentPage, b
             else if (SDL_PointInRect(&mousePoint, &gameOverExitRect)) {
                 running = false;
             }
+        }
+    }
+}
+
+void handleSoundButtonClick(SDL_Event& event, bool& isSoundOn) {
+    int mouseX = event.button.x;
+    int mouseY = event.button.y;
+    SDL_Point mousePoint = {mouseX, mouseY};
+
+    if (SDL_PointInRect(&mousePoint, &soundButton)) {
+
+        isSoundOn = !isSoundOn;
+
+
+        if(isSoundOn) {
+            Mix_ResumeMusic();
+            Mix_Volume(-1, MIX_MAX_VOLUME);
+        }
+        else {
+            Mix_PauseMusic();
+            Mix_Volume(-1, 0);
         }
     }
 }

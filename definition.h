@@ -134,6 +134,7 @@ extern SDL_Texture* passExitButton;
 extern SDL_Texture* levelPreview;
 
 extern SDL_Texture* star;
+extern SDL_Texture* lock;
 
 extern SDL_Texture* dizzy1;
 extern SDL_Texture* dizzy2;

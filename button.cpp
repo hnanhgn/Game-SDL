@@ -34,7 +34,7 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
                  SDL_Event& event, bool& loaded, Uint32& levelStartTime, int& lives, int& seeds, int& plantedFlower,
                  int& beeCount, std::vector<Bee>& bees, std::vector<Plant>& plants, TTF_Font* font, bool& isPaused,
                  bool& wasPaused, bool& pausedTimeSet, Uint32& PausedTime, bool& running ) {
-    //SDL_RenderCopy(renderer, levelPreviewTexture, nullptr, nullptr);
+
 
     if (event.type == SDL_MOUSEBUTTONDOWN) {
         int mouseX = event.button.x;
@@ -57,7 +57,7 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             pausedTimeSet = false;
             PausedTime = 0;
         }
-        else if (SDL_PointInRect(&mousePoint, &level2Button)) {
+        else if (SDL_PointInRect(&mousePoint, &level2Button) && completedLevel[0]) {
             level = 2;
             lives = 4;
             seeds = 10;
@@ -81,7 +81,7 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             pausedTimeSet = false;
             PausedTime = 0;
         }
-        else if (SDL_PointInRect(&mousePoint, &level3Button)) {
+        else if (SDL_PointInRect(&mousePoint, &level3Button) && completedLevel[0] && completedLevel[1]) {
             level = 3;
             lives = 5;
             seeds = 10;
@@ -105,7 +105,7 @@ void chooseLevel(SDL_Renderer* renderer, SDL_Texture* levelPreviewTexture, bool&
             pausedTimeSet = false;
             PausedTime = 0;
         }
-        else if (SDL_PointInRect(&mousePoint, &level4Button)) {
+        else if (SDL_PointInRect(&mousePoint, &level4Button) && completedLevel[0] && completedLevel[1] && completedLevel[2]) {
             level = 4;
             lives = 5;
             seeds = 10;

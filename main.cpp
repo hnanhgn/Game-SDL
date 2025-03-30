@@ -168,6 +168,7 @@ int main(int argc, char* argv[])
         else if (showLevelPreview) {
             SDL_RenderCopy(renderer, levelPreview, nullptr, nullptr);
             drawStar(renderer, completedLevel);
+            lockLevel( renderer);
             if (completedLevel[0] && completedLevel[1] && completedLevel[2] && completedLevel[3]) {
                 Mix_PlayChannel(-1, happySound, 0);
                 SDL_RenderCopy(renderer, win, nullptr, &winRect);

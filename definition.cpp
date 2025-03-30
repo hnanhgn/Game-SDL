@@ -91,7 +91,8 @@ SDL_Texture* playAgainButton;
 SDL_Texture* passExitButton;
 
 SDL_Texture* levelPreview = nullptr;
-SDL_Texture*star;
+SDL_Texture* star;
+SDL_Texture* lock;
 
 SDL_Texture* dizzy1 = nullptr;
 SDL_Texture* dizzy2 = nullptr;
@@ -140,6 +141,7 @@ void loadTextures(SDL_Renderer* renderer) {
 
     levelPreview = loadTexture("pics/levelPreview.png", renderer);
     star = loadTexture("pics/star.png", renderer);
+    lock = loadTexture("pics/lock.png", renderer);
 
     dizzy1 = loadTexture("pics/dizzy1.png", renderer);
     dizzy2 = loadTexture("pics/dizzy2.png", renderer);

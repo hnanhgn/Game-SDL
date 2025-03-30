@@ -33,9 +33,9 @@ void drawLevelInfo(SDL_Renderer* renderer, TTF_Font* font, int level, int plante
     float elapsedTime;
 
     if (isPaused) {
-        elapsedTime = pausedTime / 1000.0f; // Dừng thời gian tại pausedTime
+        elapsedTime = pausedTime / 1000.0f;
     } else {
-        elapsedTime = (currentTime - levelStartTime) / 1000.0f; // Thời gian bình thường
+        elapsedTime = (currentTime - levelStartTime) / 1000.0f;
     }
 
     float timeLimit = 0.0f;

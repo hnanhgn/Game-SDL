@@ -194,3 +194,29 @@ void drawSoundButton(SDL_Renderer* renderer, bool& isSoundOn) {
     SDL_Texture* currentTexture = isSoundOn ? soundOn : soundOff;
     SDL_RenderCopy(renderer, currentTexture, nullptr, &soundButton);
 }
+
+void lockLevel(SDL_Renderer* renderer)
+{
+    SDL_Rect lockRect = {0, 0, 60, 60};
+    if (!completedLevel[0]) {
+        lockRect.x = level1Button.x + level1Button.w - 170;
+        lockRect.y = level1Button.y - 20;
+        SDL_RenderCopy(renderer, lock, nullptr, &lockRect);
+    }
+    if (!completedLevel[1]) {
+        lockRect.x = level2Button.x + level2Button.w - 15;
+        lockRect.y = level2Button.y + 110;
+        SDL_RenderCopy(renderer, lock, nullptr, &lockRect);
+    }
+    if (!completedLevel[2]) {
+        lockRect.x = level3Button.x +level3Button.w - 50;
+        lockRect.y = level3Button.y - 20;
+        SDL_RenderCopy(renderer, lock, nullptr, &lockRect);
+    }
+    if (!completedLevel[3]) {
+        lockRect.x = level4Button.x + level4Button.w + 5;
+        lockRect.y = level4Button.y + 70;
+        SDL_RenderCopy(renderer, lock, nullptr, &lockRect);
+    }
+
+}

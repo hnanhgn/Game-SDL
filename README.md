@@ -1,65 +1,14 @@
-# 🌼 Bee Garden Adventure 🐝
+# 🌼 Loopy's Garden Adventure 🐝
 
-## 🎮 Giới thiệu
-**Bee Garden Adventure** là một trò chơi thú vị, nơi người chơi điều khiển nhân vật để trồng hoa, thu hoạch và tránh những con ong đang tìm kiếm mật.
+## 🎮 Video demo: https://drive.google.com/file/d/1y3FC3_PKf3fxfb0TVN5RpwXGRibR128J/view?usp=sharing
 
-## 🕹️ Lối chơi
-- Người chơi sẽ **gieo hạt giống**, chăm sóc hoa và **thu hoạch** khi hoa nở.
-- Cần **hái đủ số hoa trong thời gian quy định** để vượt qua từng level.
-- Cẩn thận với **những con ong**! Chúng sẽ bay quanh vườn để tìm hoa và có thể làm nhân vật bị choáng nếu va chạm.
-- Game có **4 level với độ khó tăng dần**, người chơi phải vượt qua tất cả để chiến thắng.
+## 🕹️ Giới thiệu 
+- Khu vườn của Loopy đang có những bông hoa rất tươi tốt, vì vậy mà những chú ong tinh nghịch kéo đến càng nhiều thêm. Bạn hãy cùng Loopy bảo vệ và phát triển khu vườn đáng yêu này nhé !
 
-## 🔧 Logic game
-- **Gieo hạt giống**: Mỗi hoa cần 2 hạt, nhưng các hoa tiếp theo cần 3 hạt.
-- **Thu hoạch hoa**: Hái nhanh trước khi ong đến lấy mật.
-- **Ong hút mật**: Nếu người chơi không hái kịp, ong sẽ lấy hoa.
-- **Ong tấn công**: Nếu chạm vào ong, nhân vật bị choáng và mất mạng.
-- **Thua cuộc** nếu hết thời gian hoặc hết mạng.
-
-## 🎨 Đồ họa & Âm thanh
-### **🔹 Đồ họa:**
-- Màn hình **Chào mừng**, **Chọn level**, **Chơi game**.
-- Nhân vật bay liên tục, có hiệu ứng **choáng** khi bị ong đốt.
-- Mô phỏng **quá trình phát triển hoa** từ hạt giống → nụ → nở hoa.
-
-### **🔹 Âm thanh:**
-- Nhạc nền chạy xuyên suốt game.
-- Âm thanh khi click chuột.
-- Âm thanh **khóc khi bị ong đốt**, **vui khi thắng level**.
-
-## 📁 Cấu trúc project
-```
-├── src/
-│   ├── beeOperation.cpp // Điều khiển hành động của ong
-│   ├── characterMovement.cpp // Xử lý di chuyển nhân vật
-│   ├── button.cpp // Xử lý sự kiện nút bấm
-│   ├── definition.h // Định nghĩa hằng số
-│   ├── flowerGrowth.cpp // Xử lý hoa nở
-│   ├── textureManager.cpp // Quản lý hình ảnh
-│   ├── updateScore.cpp // Cập nhật điểm số
-│   ├── main.cpp // Vòng lặp game
-└── assets/
-    ├── images/ // Hình ảnh, background
-    ├── sounds/ // Nhạc nền, hiệu ứng âm thanh
-```
-
-## 🚀 Cài đặt & Chạy game
-### **1️⃣ Cài đặt SDL2** (nếu chưa có)
-```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
-```
-
-### **2️⃣ Clone project từ GitHub**
-```bash
-git clone https://github.com/yourusername/bee-garden-game.git
-cd bee-garden-game
-```
-
-### **3️⃣ Biên dịch & chạy game**
-```bash
-g++ -o game src/*.cpp -lSDL2 -lSDL2_image -lSDL2_mixer
-./game
-```
+## 🔧 Luật chơi
+- Có 4 level với độ khó tăng dần về số ong và số lượng hoa cần hái, bạn cần chơi lần lượt và vượt qua tất cả level để chiến thắng.
+- Bạn có sẵn 10 hạt giống, mỗi bông hoa cần 2 hạt giống để gieo trồng. khi hoa nở, bạn sẽ hái và nhận lại 3 hạt giống để tiếp tục trồng hoa. Hãy thu thập đủ số hoa trong thời gian yêu cầu nhé.
+- **Warning**: Từ level 2, ong sẽ xuất hiện để cướp hoa từ vườn của bạn. Hãy tránh chúng một cách khéo léo để không bị trừ mạng.
 
 ## 📜 Điều khiển nhân vật
 - **Mũi tên trái/phải/lên/xuống**: Di chuyển nhân vật.
@@ -68,10 +17,5 @@ g++ -o game src/*.cpp -lSDL2 -lSDL2_image -lSDL2_mixer
 - **Chuột**: Nhấn vào các nút trong menu.
 - **ESC**: Dừng trò chơi.
 
-## 🎯 Mục tiêu game
-- Hoàn thành **4 level**, hái đủ số hoa trước khi hết thời gian!
-- Tránh ong để không mất mạng!
-- Nếu hoàn thành tất cả, bạn **chiến thắng**!
-
 ---
-🎮 **Chúc bạn chơi vui vẻ!** 🌼🐝
+🎮 **Good luck!** 🌼🐝

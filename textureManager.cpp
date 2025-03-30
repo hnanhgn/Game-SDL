@@ -102,6 +102,7 @@ void drawWelcomeScreen(SDL_Renderer* renderer, SDL_Texture* welcome, SDL_Texture
     SDL_RenderCopy(renderer, welcome, nullptr, nullptr);
     SDL_RenderCopy(renderer, playIcon, nullptr, &playButton);
     SDL_RenderCopy(renderer, directionIcon, nullptr, &directionButton);
+    SDL_RenderCopy(renderer, exitEarly, nullptr, &exitNow);
 }
 
 void drawLoadingScreen(SDL_Renderer* renderer, SDL_Texture* beforeGame)

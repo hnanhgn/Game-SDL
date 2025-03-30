@@ -124,14 +124,13 @@ int main(int argc, char* argv[])
             }
 
             if (showWelcomeScreen)
-                handleWelcomeScreenEvents(event, showWelcomeScreen, showLoadingScreen, showDirection, currentPage);
+                handleWelcomeScreenEvents(event, showWelcomeScreen, showLoadingScreen, showDirection, currentPage, running);
 
-            if (showLevelPreview)
+            if (showLevelPreview){
                 chooseLevel(renderer, levelPreview, showLevelPreview, level,
-                            level1Button, level2Button, level3Button, level4Button,
                             event, loaded, levelStartTime, lives, seeds, plantedFlower,
-                            beeCount, bees, plants, font, isPaused, wasPaused, pausedTimeSet, pausedTime);
-
+                            beeCount, bees, plants, font, isPaused, wasPaused, pausedTimeSet, pausedTime, running);
+            }
             if (!showWelcomeScreen && loaded && !showLevelPreview) {
                 handleGameEvents(event, showDirection, currentPage, facingLeft, playerRect, seeds, plantedFlower,
                                  isPaused, running, showPassScreen, showLevelPreview, loaded, level, lives,
@@ -173,6 +172,7 @@ int main(int argc, char* argv[])
                 Mix_PlayChannel(-1, happySound, 0);
                 SDL_RenderCopy(renderer, win, nullptr, &winRect);
             }
+            SDL_RenderCopy(renderer, exitEarly, nullptr, &exitLevel);
             drawSoundButton(renderer, isSoundOn);
             SDL_RenderPresent(renderer);
         }
@@ -192,26 +192,26 @@ int main(int argc, char* argv[])
                 }
                 updateFlowerGrowth(plants);
                 moveBee(bees, plants);
-
-                if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost, state)) {
-                    if (gameWon) {
-                        Mix_PlayChannel(-1, happySound, 0);
-                        showPassScreen = true;
-                        dizzyStartTime = 0;
-                        isPaused = true;
-                        gameWon = false;
-                        levelStartTime = SDL_GetTicks();
-                    }
-                    if (gameLost) {
-                        Mix_PlayChannel(-1, crySound, 0);
-                        showGameOverScreen = true;
-                        dizzyStartTime = 0;
-                        gameLost = false;
-                        isPaused = true;
-                        levelStartTime = SDL_GetTicks();
-                    }
+            }
+            if (checkLevelWinLose(level, plantedFlower, beeCount, levelStartTime, lives, gameWon, gameLost, state)) {
+                if (gameWon) {
+                    Mix_PlayChannel(-1, happySound, 0);
+                    showPassScreen = true;
+                    dizzyStartTime = 0;
+                    isPaused = true;
+                    gameWon = false;
+                    levelStartTime = SDL_GetTicks();
+                }
+                if (gameLost) {
+                    Mix_PlayChannel(-1, crySound, 0);
+                    showGameOverScreen = true;
+                    dizzyStartTime = 0;
+                    gameLost = false;
+                    isPaused = true;
+                    levelStartTime = SDL_GetTicks();
                 }
             }
+
 
             SDL_RenderCopy(renderer, background, nullptr, nullptr);
             addBees(level);
@@ -237,6 +237,7 @@ int main(int argc, char* argv[])
             drawSoundButton(renderer, isSoundOn);
 
             SDL_RenderPresent(renderer);
+
         }
     }
     TTF_CloseFont(font);

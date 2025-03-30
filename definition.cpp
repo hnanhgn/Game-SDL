@@ -11,9 +11,9 @@ using namespace std;
 SDL_Renderer* renderer = nullptr;
 SDL_Rect playerRect = {SCREEN_WIDTH / 2 - CHARACTER_WIDTH / 2, SCREEN_HEIGHT / 2 - CHARACTER_HEIGHT / 2, CHARACTER_WIDTH, CHARACTER_HEIGHT};
 
-SDL_Rect playButton = { 100, 450, 150, 120 };
-SDL_Rect directionButton = { 250, 450, 150, 120 };
-
+SDL_Rect playButton = { 70, 450, 150, 120 };
+SDL_Rect directionButton = { 180, 450, 150, 120 };
+SDL_Rect exitNow = {290, 450, 150, 120};
 
 SDL_Rect nextRect = {350, 520, 50, 20};
 SDL_Rect backRect = {300, 520, 50, 20};
@@ -23,6 +23,7 @@ SDL_Rect level1Button = {100, 400, 200, 200};
 SDL_Rect level2Button = {250, 500, 200, 200};
 SDL_Rect level3Button = {450, 400, 200, 200};
 SDL_Rect level4Button = {700, 500, 200, 200};
+SDL_Rect exitLevel = {50, 600, 120, 90};
 
 SDL_Rect pauseRect = {750, 430, 300, 240};
 SDL_Rect pausingRect = {SCREEN_WIDTH / 2 - 550 / 2, SCREEN_HEIGHT / 2 - 450 / 2, 550, 450};
@@ -77,6 +78,7 @@ SDL_Texture* direction2;
 SDL_Texture* nextButton;
 SDL_Texture* backButton;
 SDL_Texture* closeButton;
+SDL_Texture* exitEarly;
 
 SDL_Texture* pauseButton;
 SDL_Texture* pausing;
@@ -124,6 +126,7 @@ void loadTextures(SDL_Renderer* renderer) {
     nextButton = loadTexture("pics/next.png", renderer);
     backButton = loadTexture("pics/back.png", renderer);
     closeButton = loadTexture("pics/close.png", renderer);
+    exitEarly = loadTexture("pics/exitEarly.png", renderer);
 
     pauseButton = loadTexture("pics/pause.png", renderer);
     pausing = loadTexture("pics/pausing.png", renderer);

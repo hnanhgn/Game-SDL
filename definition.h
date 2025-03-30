@@ -17,8 +17,8 @@ const int CHARACTER_WIDTH = 65;
 const int CHARACTER_HEIGHT = 73;
 const int CHARACTER_SPEED = 10;
 
-const int BEE_WIDTH = 40;
-const int BEE_HEIGHT = 40;
+const int BEE_WIDTH = 35;
+const int BEE_HEIGHT = 35;
 const int BEE_SPEED = 3;
 
 extern SDL_Rect playerRect ;
@@ -26,6 +26,7 @@ extern SDL_Renderer* renderer;
 
 extern SDL_Rect playButton;
 extern SDL_Rect directionButton;
+extern SDL_Rect exitNow;
 
 extern SDL_Rect nextRect;
 extern SDL_Rect backRect;
@@ -35,6 +36,7 @@ extern SDL_Rect level1Button ;
 extern SDL_Rect level2Button ;
 extern SDL_Rect level3Button ;
 extern SDL_Rect level4Button ;
+extern SDL_Rect exitLevel;
 
 extern SDL_Rect pauseRect ;
 extern SDL_Rect pausingRect;
@@ -116,6 +118,8 @@ extern SDL_Texture* direction2;
 extern SDL_Texture* nextButton;
 extern SDL_Texture* backButton;
 extern SDL_Texture* closeButton;
+
+extern SDL_Texture* exitEarly;
 
 extern SDL_Texture* pauseButton;
 extern SDL_Texture* pausing;

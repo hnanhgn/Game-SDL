@@ -32,8 +32,8 @@ void updateMovement (SDL_Rect& playerRect)
     if (playerRect.y < 170)
         playerRect.y = 170;
 
-    if (playerRect.y > 550)
-        playerRect.y = 550;
+    if (playerRect.y > 530)
+        playerRect.y = 530;
 
 }
 
@@ -43,7 +43,7 @@ void dropSeed(SDL_Rect& playerRect, int& seeds, int& plantedFlowers) {
     if (seeds >= 2) {
 
         Plant newPlant;
-        newPlant.rect = {playerRect.x + 30, playerRect.y + 30, 20, 20};
+        newPlant.rect = {playerRect.x + 30, playerRect.y + 30, 23, 23};
         newPlant.stage = SEED;
         newPlant.plantedTime = SDL_GetTicks();
         plants.push_back(newPlant);

@@ -27,11 +27,11 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 
         }
         if (minDistance < MIN_DISTANCE_TO_FLOWER) {
-            float targetX = nearestFlower.x + (nearestFlower.w - bee.rect.w) / 2.0f;
-            float targetY = nearestFlower.y - bee.rect.h + 15.0f;
+            //float targetX = nearestFlower.x + (nearestFlower.w - bee.rect.w) / 2.0f;
+            //float targetY = nearestFlower.y - bee.rect.h + 15.0f;
 
-            float deltaX = targetX - bee.rect.x;
-            float deltaY = targetY - bee.rect.y;
+            float deltaX = nearestFlower.x - bee.rect.x;
+            float deltaY = nearestFlower.y - bee.rect.y;
 
             float angle = atan2(deltaY, deltaX);
 
@@ -42,8 +42,9 @@ void moveBee( vector<Bee>& bees, vector<Plant>& plants)
                 bee.rect.y += sin(angle) * BEE_SPEED + waveY;
             }
             else {
-                bee.rect.x = targetX;
-                bee.rect.y = targetY;
+                //bee.rect.x = targetX;
+                //bee.rect.y = targetY;
+
                 bee.velocityX = 0;
                 bee.velocityY = 0;
             }

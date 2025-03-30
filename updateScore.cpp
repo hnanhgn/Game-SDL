@@ -143,7 +143,7 @@ bool checkLevelWinLose(int level, int plantedFlowers, int& beeCount, Uint32 leve
         gameLost = true;
     }
     state = gameLost || gameWon;
-    return (gameWon || gameLost); // Trả về true khi level kết thúc
+    return (gameWon || gameLost);
 }
 
 

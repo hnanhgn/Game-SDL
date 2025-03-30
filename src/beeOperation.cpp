@@ -5,8 +5,8 @@
 #include <vector>
 #include <algorithm>
 
-#include "definition.h"
-#include "flowerGrowth.h"
+#include "include/definition.h"
+#include "include/flowerGrowth.h"
 
 void moveBee( vector<Bee>& bees, vector<Plant>& plants)
 {

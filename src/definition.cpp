@@ -3,8 +3,8 @@
 #include <SDL_mixer.h>
 #include <string>
 
-#include "definition.h"
-#include "textureManager.h"
+#include "include/definition.h"
+#include "include/textureManager.h"
 
 using namespace std;
 

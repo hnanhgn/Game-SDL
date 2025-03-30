@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "textureManager.h"
-#include "definition.h"
+#include "include/textureManager.h"
+#include "include/definition.h"
 
 
 using namespace std;

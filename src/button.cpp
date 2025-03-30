@@ -1,4 +1,4 @@
-#include "button.h"
+#include "include/button.h"
 #include <iostream>
 
 void handleWelcomeScreenEvents(SDL_Event& event, bool& showWelcomeScreen, bool& showLoadingScreen,

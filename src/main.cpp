@@ -6,13 +6,13 @@
 #include <string.h>
 #include <vector>
 
-#include "definition.h"
-#include "textureManager.h"
-#include "characterMovement.h"
-#include "flowerGrowth.h"
-#include "updateScore.h"
-#include "beeOperation.h"
-#include "button.h"
+#include "include/definition.h"
+#include "include/textureManager.h"
+#include "include/characterMovement.h"
+#include "include/flowerGrowth.h"
+#include "include/updateScore.h"
+#include "include/beeOperation.h"
+#include "include/button.h"
 
 using namespace std;
 
@@ -93,10 +93,10 @@ int main(int argc, char* argv[])
     bool gameLost = false;
     bool showDirection = false;
     bool showLevelPreview = false;
-    bool isPaused = false;
     bool showPassScreen = false;
     bool showGameOverScreen = false;
     bool state = false;
+    bool isPaused = false;
     bool wasPaused = false;
     bool pausedTimeSet;
     bool isSoundOn = true;
@@ -241,9 +241,48 @@ int main(int argc, char* argv[])
 
         }
     }
+
+    SDL_DestroyTexture(background);
+    SDL_DestroyTexture(welcome);
+    SDL_DestroyTexture(playIcon);
+    SDL_DestroyTexture(directionIcon);
+    SDL_DestroyTexture(levelPreview);
+    SDL_DestroyTexture(character1);
+    SDL_DestroyTexture(character2);
+    SDL_DestroyTexture(character3);
+    SDL_DestroyTexture(dizzy1);
+    SDL_DestroyTexture(dizzy2);
+    SDL_DestroyTexture(flowerGrowthStep);
+    SDL_DestroyTexture(bee);
+    SDL_DestroyTexture(pauseButton);
+    SDL_DestroyTexture(soundOn);
+    SDL_DestroyTexture(soundOff);
+    SDL_DestroyTexture(star);
+    SDL_DestroyTexture(win);
+    SDL_DestroyTexture(exitEarly);
+    SDL_DestroyTexture(beforeGame);
+    SDL_DestroyTexture(direction1);
+    SDL_DestroyTexture(direction2);
+    SDL_DestroyTexture(nextButton);
+    SDL_DestroyTexture(backButton);
+    SDL_DestroyTexture(closeButton);
+    SDL_DestroyTexture(passLevel);
+    SDL_DestroyTexture(menuButton);
+    SDL_DestroyTexture(playAgainButton);
+    SDL_DestroyTexture(passExitButton);
+    SDL_DestroyTexture(gameOver);
+    SDL_DestroyTexture(pausing);
+    SDL_DestroyTexture(continueButton);
+    SDL_DestroyTexture(exitButton);
+
     TTF_CloseFont(font);
     TTF_Quit();
-    SDL_DestroyTexture(background);
+
+    Mix_FreeChunk(clickSound);
+    Mix_FreeChunk(crySound);
+    Mix_FreeChunk(happySound);
+    Mix_FreeMusic(backgroundMusic);
+    Mix_CloseAudio();
     quitSDL(window, renderer);
     return 0;
 }

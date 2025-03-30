@@ -1,6 +1,6 @@
 #include <SDL.h>
 
-#include "definition.h"
+#include "include/definition.h"
 
 void updateFlowerGrowth(std::vector<Plant>& plants) {
     Uint32 currentTime = SDL_GetTicks();

@@ -1,9 +1,9 @@
 #include <SDL.h>
 #include <vector>
 
-#include "characterMovement.h"
-#include "definition.h"
-#include "textureManager.h"
+#include "include/characterMovement.h"
+#include "include/definition.h"
+#include "include/textureManager.h"
 
 
 void updateMovement (SDL_Rect& playerRect)

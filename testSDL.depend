@@ -5,7 +5,7 @@
 	<iomanip>
 	<SDL.h>
 
-1743336364 source:c:\users\admin\documents\project game\testsdl\main.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -13,13 +13,13 @@
 	<SDL_mixer.h>
 	<string.h>
 	<vector>
-	"definition.h"
-	"textureManager.h"
-	"characterMovement.h"
-	"flowerGrowth.h"
-	"updateScore.h"
-	"beeOperation.h"
-	"button.h"
+	"include/definition.h"
+	"include/textureManager.h"
+	"include/characterMovement.h"
+	"include/flowerGrowth.h"
+	"include/updateScore.h"
+	"include/beeOperation.h"
+	"include/button.h"
 
 1741320427 source:c:\users\admin\documents\project game\testsdl\playermovement.cpp
 	<SDL.h>
@@ -32,21 +32,21 @@
 	<SDL_mixer.h>
 	<vector>
 
-1743333183 source:c:\users\admin\documents\project game\testsdl\charactermovement.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\charactermovement.cpp
 	<SDL.h>
 	<vector>
-	"characterMovement.h"
-	"definition.h"
-	"textureManager.h"
+	"include/characterMovement.h"
+	"include/definition.h"
+	"include/textureManager.h"
 
-1743336358 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\texturemanager.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<string>
 	<vector>
-	"textureManager.h"
-	"definition.h"
+	"include/textureManager.h"
+	"include/definition.h"
 
 1743336358 c:\users\admin\documents\project game\testsdl\texturemanager.h
 	<SDL.h>
@@ -66,13 +66,13 @@
 	"definition.h"
 	"textureManager.h"
 
-1743336358 source:c:\users\admin\documents\project game\testsdl\definition.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\definition.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<string>
-	"definition.h"
-	"textureManager.h"
+	"include/definition.h"
+	"include/textureManager.h"
 
 1741366827 source:c:\users\admin\documents\project game\testsdl\drawdetails.cpp
 	<SDL.h>
@@ -82,40 +82,40 @@
 
 1741570089 source:c:\users\admin\documents\project game\testsdl\grid.cpp
 
-1743276481 source:c:\users\admin\documents\project game\testsdl\flowergrowth.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\flowergrowth.cpp
 	<SDL.h>
-	"definition.h"
+	"include/definition.h"
 
 1742840171 c:\users\admin\documents\project game\testsdl\flowergrowth.h
 	<SDL.h>
 	"definition.h"
 
-1743336358 source:c:\users\admin\documents\project game\testsdl\updatescore.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\updatescore.cpp
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
 	<fstream>
-	"definition.h"
+	"include/definition.h"
 
 1743323564 c:\users\admin\documents\project game\testsdl\updatescore.h
 	<SDL_ttf.h>
 	<fstream>
 	"definition.h"
 
-1743334097 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
+1743347855 source:c:\users\admin\documents\project game\testsdl\beeoperation.cpp
 	<SDL.h>
 	<cmath>
 	<cfloat>
 	<cstdlib>
 	<vector>
 	<algorithm>
-	"definition.h"
-	"flowerGrowth.h"
+	"include/definition.h"
+	"include/flowerGrowth.h"
 
 1742921232 c:\users\admin\documents\project game\testsdl\beeoperation.h
 
-1743336358 source:c:\users\admin\documents\project game\testsdl\button.cpp
-	"button.h"
+1743347855 source:c:\users\admin\documents\project game\testsdl\button.cpp
+	"include/button.h"
 	<iostream>
 
 1743331815 c:\users\admin\documents\project game\testsdl\button.h
@@ -125,4 +125,42 @@
 	"characterMovement.h"
 	"textureManager.h"
 	"updateScore.h"
+
+1743336358 c:\users\admin\documents\project game\testsdl\include\definition.h
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<vector>
+
+1742840171 c:\users\admin\documents\project game\testsdl\include\flowergrowth.h
+	<SDL.h>
+	"definition.h"
+
+1743331815 c:\users\admin\documents\project game\testsdl\include\button.h
+	<SDL.h>
+	<vector>
+	"definition.h"
+	"characterMovement.h"
+	"textureManager.h"
+	"updateScore.h"
+
+1742906634 c:\users\admin\documents\project game\testsdl\include\charactermovement.h
+	<SDL.h>
+	"definition.h"
+	"textureManager.h"
+
+1743336358 c:\users\admin\documents\project game\testsdl\include\texturemanager.h
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<vector>
+	"definition.h"
+
+1743323564 c:\users\admin\documents\project game\testsdl\include\updatescore.h
+	<SDL_ttf.h>
+	<fstream>
+	"definition.h"
+
+1742921232 c:\users\admin\documents\project game\testsdl\include\beeoperation.h
 

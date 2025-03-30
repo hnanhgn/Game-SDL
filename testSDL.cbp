@@ -13,7 +13,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="C:/Users/ADMIN/Documents/Project game/testSDL/include" />
 				</Compiler>
+				<Linker>
+					<Add directory="C:/Users/ADMIN/Documents/Project game/testSDL/src" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/testSDL" prefix_auto="1" extension_auto="1" />
